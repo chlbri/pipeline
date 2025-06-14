@@ -1,11 +1,36 @@
-## CHANGELOG
+# Changelog
 
 <br/>
 <br/>
 
-### Version [0.0.1] --> _date & hour_
+Tous les changements notables apportés à ce projet seront documentés dans
+ce fichier.
 
-- ✨ Première version de la bibliothèque
+Le format est basé sur
+[Keep a Changelog](https://keepachangelog.com/fr/1.0.0/), et ce projet
+adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.0.2] - 2025-06-14 -- 12:30
+
+### Ajouts
+
+- **feat(core)**: Implémente `pipe` avec support jusqu'à 20 fonctions
+  typées
+- **feat(core)**: Ajoute `pipe.notTyped` pour les chaînes illimitées
+- **feat(types)**: Intègre les types utilitaires essentiels
+- **test(core)**: Fournit une suite de tests complète
+- **docs**: Améliore la documentation avec des exemples détaillés
+
+### Modifications
+
+- **style(types)**: Optimise la structure pour une meilleure inférence
+  TypeScript
+
+<br/>
+
+## Licence
+
+MIT
 
 <br/>
 

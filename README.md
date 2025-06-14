@@ -1,26 +1,121 @@
-# Beatifull lib
+# pipeline
 
-A beautifull description
+Une bibliothèque élégante pour composer des fonctions en TypeScript.
+Simplifiez votre code en créant des pipelines de traitement typés et
+performants.
+
+## Installation
+
+### pnpm
+
+```bash
+pnpm install @bemedev/pipeline
+```
+
+### npm
+
+```bash
+npm install @bemedev/pipeline
+```
+
+### bun
+
+```bash
+bun add @bemedev/pipeline
+```
+
+## Utilisation
+
+```typescript
+import { pipe } from '@bemedev/pipeline';
+
+// Exemple simple
+const add1 = (x: number) => x + 1;
+const double = (x: number) => x * 2;
+
+const piped = pipe(add1, double);
+console.log(piped(2)); // Affiche 6 (= (2+1)*2)
+
+// Exemple plus complexe
+const processData = pipe(
+  (x: number) => x + 1, // Ajoute 1
+  x => x * 2, // Multiplie par 2
+  x => x - 3, // Soustrait 3
+  x => x / 2, // Divise par 2
+  x => x ** 2, // Élève au carré
+);
+
+console.log(processData(2)); // Affiche 2.25 (= ((((2+1)*2)-3)/2)^2)
+```
+
+## API
+
+### pipe(...fns)
+
+Crée un pipeline de fonctions, où chaque fonction reçoit le résultat de la
+précédente.
+
+#### Caractéristiques
+
+- Entièrement typé (jusqu'à 20 fonctions)
+- Performances optimisées
+- Support de TypeScript avec inférence de types
+
+#### Exemples d'utilisation avancée
+
+```typescript
+// Transformation de chaînes
+const formatText = pipe(
+  (s: string) => s.trim(),
+  s => s.toUpperCase(),
+  s => s + '!',
+);
+console.log(formatText('  hello ')); // Affiche "HELLO!"
+
+// Manipulation d'objets
+const enrichObject = pipe(
+  (obj: { a: number }) => ({ ...obj, b: obj.a + 1 }),
+  obj => ({ ...obj, c: obj.b * 2 }),
+);
+console.log(enrichObject({ a: 1 })); // Affiche { a: 1, b: 2, c: 4 }
+```
+
+### pipe.notTyped(...fns)
+
+Version non typée de `pipe` pour les cas où vous avez besoin de chaîner
+plus de 20 fonctions.
+
+```typescript
+// Chaîner un grand nombre de fonctions
+const addMany = pipe.notTyped(
+  ...Array.from({ length: 100 }, () => (x: number) => x + 1),
+);
+console.log(addMany(0)); // Affiche 100
+```
+
+## Types utilitaires
+
+La bibliothèque exporte plusieurs types utiles:
+
+- `Fn1`: Type de base pour une fonction à un argument
+- `NextFn<T>`: Fonction prenant comme argument le type de retour de T
+- `TupleOfLength<T, N>`: Tuple de longueur N contenant des éléments de type
+  T
+
+## CHANGELOG
+
+<details>
+<summary>Changelog complet</summary>
+
+[CHANGE_LOG.md](https://github.com/chlbri/pipeline/blob/main/CHANGE_LOG.md)
+
+</details>
 
 <br/>
 
 ## Licence
 
 MIT
-
-## CHANGE_LOG
-
-<details>
-
-<summary>
-...
-</summary>
-
-### Version [0.0.1] --> _date & hour_
-
-- ✨ Première version de la bibliothèque
-
-</details>
 
 <br/>
 
