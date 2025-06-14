@@ -6,7 +6,7 @@ import tsconfig from './tsconfig.json';
 export default defineConfig({
   plugins: [
     aliasTs(tsconfig as any),
-    exclude({ ignoreCoverageFiles: ['**/index.ts'] }),
+    exclude({ ignoreCoverageFiles: ['**/index.ts', 'src/types.ts'] }),
   ],
   test: {
     bail: 10,
@@ -21,6 +21,11 @@ export default defineConfig({
       reportsDirectory: '.coverage',
       all: true,
       provider: 'v8',
+    },
+    typecheck: {
+      enabled: true,
+      include: ['src/**/*.test-d.ts'],
+      exclude: ['node_modules', 'dist', 'coverage', 'vitest.config.ts'],
     },
   },
 });

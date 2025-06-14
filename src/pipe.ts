@@ -621,5 +621,9 @@ export function pipe<
 ): (arg: Parameters<F1>[0]) => ReturnType<F20>;
 
 export function pipe(...fns: Fn1[]): Fn1 {
-  return (arg: any) => fns.reduce((acc, fn) => fn(acc), arg);
+  return pipe.notTyped(...fns);
 }
+
+pipe.notTyped = (...fns: Fn1[]): Fn1 => {
+  return (arg: any) => fns.reduce((acc, fn) => fn(acc), arg);
+};
