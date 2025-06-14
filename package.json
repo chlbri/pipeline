@@ -1,7 +1,7 @@
 {
-  "name": "@bemedev///TODO",
+  "name": "@bemedev/pipe",
   "version": "0.0.1",
-  "description": "//TODO",
+  "description": "A utility for creating and managing pipelines in Typescript.",
   "author": {
     "email": "bri_lvi@icloud.com",
     "name": "chlbri",
