@@ -1,5 +1,8 @@
 # Changelog
 
+**N.B :** Open all links in a new tab to avoid losing your place in the
+documentation.
+
 <br/>
 
 Tous les changements notables apportés à ce projet seront documentés dans

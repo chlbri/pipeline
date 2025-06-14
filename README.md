@@ -1,4 +1,9 @@
-# pipeline
+# @bemedev/pipeline
+
+**N.B :** Open all links in a new tab to avoid losing your place in the
+documentation.
+
+<br/>
 
 Une bibliothèque élégante pour composer des fonctions en TypeScript.
 Simplifiez votre code en créant des pipelines de traitement typés et
@@ -107,7 +112,8 @@ La bibliothèque exporte plusieurs types utiles:
 <details>
 <summary>Changelog complet</summary>
 
-[CHANGE_LOG.md](https://github.com/chlbri/pipeline/blob/main/CHANGE_LOG.md){target="\_blank"}
+[CHANGE_LOG.md](https://github.com/chlbri/pipeline/blob/main/CHANGE_LOG.md)
+{:target="_blank" rel="noopener noreferrer"}
 
 </details>
 
