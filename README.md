@@ -1,4 +1,4 @@
-# @bemedev/pipeline
+# @bemedev/pipe
 
 **N.B :** Open all links in a new tab to avoid losing your place in the
 documentation.
@@ -14,19 +14,19 @@ performants.
 ### pnpm
 
 ```bash
-pnpm install @bemedev/pipeline
+pnpm install @bemedev/pipe
 ```
 
 ### npm
 
 ```bash
-npm install @bemedev/pipeline
+npm install @bemedev/pipe
 ```
 
 ### bun
 
 ```bash
-bun add @bemedev/pipeline
+bun add @bemedev/pipe
 ```
 
 ## Utilisation
