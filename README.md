@@ -107,7 +107,7 @@ La bibliothèque exporte plusieurs types utiles:
 <details>
 <summary>Changelog complet</summary>
 
-[CHANGE_LOG.md](https://github.com/chlbri/pipeline/blob/main/CHANGE_LOG.md)
+[CHANGE_LOG.md](https://github.com/chlbri/pipeline/blob/main/CHANGE_LOG.md){:target="\_blank"}
 
 </details>
 
