@@ -18,6 +18,8 @@ ce fichier.
 - 100% test coverage
 - Don't use vitest to test inner .ts files, just .test-d.ts files
 
+<br/>
+
 ## [0.0.2] - 2025-06-14 -- 12:30
 
 ### Ajouts
