@@ -2,8 +2,6 @@ export const toUpperCase = (value: string) => value.toLocaleUpperCase();
 
 export const toLowerCase = (value: string) => value.toLocaleLowerCase();
 
-export const toString = (value: unknown) => String(value);
-
 export const trim = (value: string) => value.trim();
 
 export const capitalize = (value: string) => {
