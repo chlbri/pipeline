@@ -14,7 +14,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "types": ["vitest/globals"],
     "jsx": "react",
     "esModuleInterop": true,

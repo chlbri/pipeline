@@ -1,5 +1,13 @@
 import type { Fn1, NextFn } from './types';
 
+type Args<F extends Fn1> = Parameters<F>[0] extends infer P
+  ? undefined extends P
+    ? P extends undefined
+      ? []
+      : [value?: P]
+    : [value: P]
+  : never;
+
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
  * @returns A function that takes an argument and applies a series of functions to it in sequence.
@@ -10,7 +18,7 @@ import type { Fn1, NextFn } from './types';
 export function pipe<F1 extends Fn1, F2 extends NextFn<F1>>(
   f1: F1,
   f2: F2,
-): (arg: Parameters<F1>[0]) => ReturnType<F2>;
+): (...args: Args<F1>) => ReturnType<F2>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -23,7 +31,7 @@ export function pipe<
   F1 extends Fn1,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
->(f1: F1, f2: F2, f3: F3): (arg: Parameters<F1>[0]) => ReturnType<F3>;
+>(f1: F1, f2: F2, f3: F3): (...args: Args<F1>) => ReturnType<F3>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -37,12 +45,7 @@ export function pipe<
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
->(
-  f1: F1,
-  f2: F2,
-  f3: F3,
-  f4: F4,
-): (arg: Parameters<F1>[0]) => ReturnType<F4>;
+>(f1: F1, f2: F2, f3: F3, f4: F4): (...args: Args<F1>) => ReturnType<F4>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -63,7 +66,7 @@ export function pipe<
   f3: F3,
   f4: F4,
   f5: F5,
-): (arg: Parameters<F1>[0]) => ReturnType<F5>;
+): (...args: Args<F1>) => ReturnType<F5>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -86,7 +89,7 @@ export function pipe<
   f4: F4,
   f5: F5,
   f6: F6,
-): (arg: Parameters<F1>[0]) => ReturnType<F6>;
+): (...args: Args<F1>) => ReturnType<F6>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -111,7 +114,7 @@ export function pipe<
   f5: F5,
   f6: F6,
   f7: F7,
-): (arg: Parameters<F1>[0]) => ReturnType<F7>;
+): (...args: Args<F1>) => ReturnType<F7>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -138,7 +141,7 @@ export function pipe<
   f6: F6,
   f7: F7,
   f8: F8,
-): (arg: Parameters<F1>[0]) => ReturnType<F8>;
+): (...args: Args<F1>) => ReturnType<F8>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -167,7 +170,7 @@ export function pipe<
   f7: F7,
   f8: F8,
   f9: F9,
-): (arg: Parameters<F1>[0]) => ReturnType<F9>;
+): (...args: Args<F1>) => ReturnType<F9>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -198,7 +201,7 @@ export function pipe<
   f8: F8,
   f9: F9,
   f10: F10,
-): (arg: Parameters<F1>[0]) => ReturnType<F10>;
+): (...args: Args<F1>) => ReturnType<F10>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -231,7 +234,7 @@ export function pipe<
   f9: F9,
   f10: F10,
   f11: F11,
-): (arg: Parameters<F1>[0]) => ReturnType<F11>;
+): (...args: Args<F1>) => ReturnType<F11>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -266,7 +269,7 @@ export function pipe<
   f10: F10,
   f11: F11,
   f12: F12,
-): (arg: Parameters<F1>[0]) => ReturnType<F12>;
+): (...args: Args<F1>) => ReturnType<F12>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -303,7 +306,7 @@ export function pipe<
   f11: F11,
   f12: F12,
   f13: F13,
-): (arg: Parameters<F1>[0]) => ReturnType<F13>;
+): (...args: Args<F1>) => ReturnType<F13>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -342,7 +345,7 @@ export function pipe<
   f12: F12,
   f13: F13,
   f14: F14,
-): (arg: Parameters<F1>[0]) => ReturnType<F14>;
+): (...args: Args<F1>) => ReturnType<F14>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -383,7 +386,7 @@ export function pipe<
   f13: F13,
   f14: F14,
   f15: F15,
-): (arg: Parameters<F1>[0]) => ReturnType<F15>;
+): (...args: Args<F1>) => ReturnType<F15>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -426,7 +429,7 @@ export function pipe<
   f14: F14,
   f15: F15,
   f16: F16,
-): (arg: Parameters<F1>[0]) => ReturnType<F16>;
+): (...args: Args<F1>) => ReturnType<F16>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -471,7 +474,7 @@ export function pipe<
   f15: F15,
   f16: F16,
   f17: F17,
-): (arg: Parameters<F1>[0]) => ReturnType<F17>;
+): (...args: Args<F1>) => ReturnType<F17>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -518,7 +521,7 @@ export function pipe<
   f16: F16,
   f17: F17,
   f18: F18,
-): (arg: Parameters<F1>[0]) => ReturnType<F18>;
+): (...args: Args<F1>) => ReturnType<F18>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -567,7 +570,7 @@ export function pipe<
   f17: F17,
   f18: F18,
   f19: F19,
-): (arg: Parameters<F1>[0]) => ReturnType<F19>;
+): (...args: Args<F1>) => ReturnType<F19>;
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -618,7 +621,7 @@ export function pipe<
   f18: F18,
   f19: F19,
   f20: F20,
-): (arg: Parameters<F1>[0]) => ReturnType<F20>;
+): (...args: Args<F1>) => ReturnType<F20>;
 
 export function pipe(...fns: Fn1[]): Fn1 {
   return pipe.notTyped(...fns);
