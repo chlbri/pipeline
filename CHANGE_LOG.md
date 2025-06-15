@@ -10,6 +10,14 @@ ce fichier.
 
 <br/>
 
+## [0.0.9] - 2025-06-15 -- 23:00
+
+### Added
+
+- Add extensions methods
+- 100% test coverage
+- Don't use vitest to test inner .ts files, just .test-d.ts files
+
 ## [0.0.2] - 2025-06-14 -- 12:30
 
 ### Ajouts
