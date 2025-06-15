@@ -16,6 +16,23 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "module": "lib/index.js",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs",
+      "types": "./lib/index.d.ts",
+      "node": "./lib/index.cjs",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json",
+    "./extensions/*": {
+      "import": "./lib/extensions/*.js",
+      "require": "./lib/extensions/*.cjs",
+      "types": "./lib/extensions/*.d.ts",
+      "node": "./lib/extensions/*.cjs",
+      "default": "./lib/extensions/*.js"
+    }
+  },
   "maintainers": [
     {
       "email": "bri_lvi@icloud.com",
@@ -86,7 +103,7 @@
     "@bemedev/rollup-config": "^0.1.1",
     "@bemedev/vitest-alias": "^0.0.3",
     "@bemedev/vitest-exclude": "^0.1.1",
-    "@bemedev/vitest-extended": "^1.3.1",
+    "@bemedev/vitest-extended": "^1.3.3",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.29.0",
     "@size-limit/file": "^11.2.0",

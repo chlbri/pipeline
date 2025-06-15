@@ -1,3 +1,5 @@
+type FnN = (a: number, b: number) => number;
+
 /**
  *  A utility function to create a binary operation function.
  * @param fn  A function that takes two numbers and returns a number.
@@ -11,8 +13,8 @@
  * const result2 = times(4)(5); // 20
  * ```typescript
  */
-export const operation = (fn: (a: number, b: number) => number) => {
-  return (value: number) => (toApply: number) => fn(value, toApply);
+export const operation = (fn: FnN) => {
+  return (toApply: number) => (value: number) => fn(value, toApply);
 };
 
 export const add = operation((a, b) => a + b);

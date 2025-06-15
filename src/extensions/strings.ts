@@ -7,7 +7,7 @@ export const toString = (value: unknown) => String(value);
 export const trim = (value: string) => value.trim();
 
 export const capitalize = (value: string) => {
-  return value.charAt(0).toLocaleLowerCase() + value.slice(1);
+  return value.charAt(0).toLocaleUpperCase() + value.slice(1);
 };
 
 export const escapeRegExp = (value: string) => {
@@ -17,10 +17,17 @@ export const escapeRegExp = (value: string) => {
 export const replaceAll = (...replacers: string[]) => {
   return (value: string) => {
     let out = value;
-    replacers.forEach(
-      repl => (out = out.replace(new RegExp(escapeRegExp(repl), 'g'), '')),
-    );
+    replacers.forEach(repl => {
+      const regex = new RegExp(escapeRegExp(repl), 'g');
+      out = out.replace(regex, '');
+    });
 
     return out;
+  };
+};
+
+export const concat = (...strings: string[]) => {
+  return (value: string) => {
+    return strings.reduce((acc, str) => acc + str, value);
   };
 };
