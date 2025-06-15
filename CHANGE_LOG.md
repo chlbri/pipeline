@@ -1,11 +1,36 @@
-## CHANGELOG
+# Changelog
+
+**N.B :** Open all links in a new tab to avoid losing your place in the
+documentation.
 
 <br/>
+
+Tous les changements notables apportés à ce projet seront documentés dans
+ce fichier.
+
 <br/>
 
-### Version [0.0.1] --> _date & hour_
+## [0.0.2] - 2025-06-14 -- 12:30
 
-- ✨ Première version de la bibliothèque
+### Ajouts
+
+- **feat(core)**: Implémente `pipe` avec support jusqu'à 20 fonctions
+  typées
+- **feat(core)**: Ajoute `pipe.notTyped` pour les chaînes illimitées
+- **feat(types)**: Intègre les types utilitaires essentiels
+- **test(core)**: Fournit une suite de tests complète
+- **docs**: Améliore la documentation avec des exemples détaillés
+
+### Modifications
+
+- **style(types)**: Optimise la structure pour une meilleure inférence
+  TypeScript
+
+<br/>
+
+## Licence
+
+MIT
 
 <br/>
 
@@ -21,4 +46,4 @@ chlbri (bri_lvi@icloud.com)
 
 ## Liens
 
-- [Documentation](https://github.com/chlbri/new-package)
+- [Documentation](https://github.com/chlbri/pipeline)
