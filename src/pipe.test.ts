@@ -6,7 +6,7 @@ import {
   exponent,
   times,
 } from './extensions/numbers/arithmetic';
-import { flatten, mapArray } from './extensions/objects';
+import { flatten, mapArray } from './extensions/fixtures';
 import {
   capitalize,
   concat,
@@ -158,7 +158,7 @@ describe('pipe', () => {
 
     type Re = TupleOfLength<typeof fn, 21>;
     /**
-     * Generates an array of 20 functions
+     * Generates an array of 21 functions
      */
     const array = Array.from({ length: 21 }, () => fn) as Re;
 

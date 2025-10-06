@@ -10,6 +10,18 @@ ce fichier.
 
 <br/>
 
+## [0.1.0] - 2025-10-06 -- 21:28
+
+### Added
+
+- Add async functions
+- Async functions tested
+- `objects.ts` extensions is now `fixtures.ts` extensions, it is not longer
+  part of the lib. It is used only for testing purposes.
+- 100% test coverage
+
+<br/>
+
 ## [0.0.9] - 2025-06-15 -- 23:00
 
 ### Added
