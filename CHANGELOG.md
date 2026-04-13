@@ -10,6 +10,25 @@ ce fichier.
 
 <br/>
 
+<details>
+<summary>
+
+## **[0.1.1] - 13/04/2026** => _00:00_
+
+</summary>
+
+- Refactor: déplacer `flatten` et `mapArray` vers `fixtures.ts` (usage test uniquement)
+- Update: migrer le bundler de rollup vers rolldown
+- Update: migrer le linter de eslint vers oxlint
+- Update: migrer le formateur de prettier vers oxfmt
+- Update: élever la version minimale de Node.js de >=20 à >=24
+- Update: mettre à jour toutes les dépendances
+- <u>Test coverage **_100%_**</u>
+
+</details>
+
+<br/>
+
 ## [0.1.0] - 2025-10-06 -- 21:28
 
 ### Added

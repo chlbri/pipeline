@@ -1,4 +1,4 @@
-import { createTests } from '@bemedev/vitest-extended';
+import { createTests } from '@bemedev/dev-utils/vitest-extended';
 import { identity } from './extensions/common';
 import {
   add,
@@ -73,12 +73,9 @@ describe('pipe', () => {
         },
         {
           invite: 'Add 1 20 times',
-          parameters: [
-            ...(Array.from({ length: 20 }, () => add(1)) as TupleOfLength<
-              (x: number) => number,
-              20
-            >),
-          ],
+          parameters: Array.from({ length: 20 }, () =>
+            add(1),
+          ) as TupleOfLength<(x: number) => number, 20>,
           expected: 22,
         },
       ),
