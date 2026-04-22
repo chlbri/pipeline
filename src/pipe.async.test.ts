@@ -1,4 +1,4 @@
-import { identity } from './extensions/common';
+import { identity, tap, voidAction } from './extensions/common';
 import { flatten, mapArray } from './extensions/fixtures';
 import {
   add,
@@ -33,7 +33,7 @@ const toLowerCaseAsync = async (str: string) =>
 const capitalizeAsync = async (str: string) =>
   Promise.resolve(capitalize(str));
 
-describe('pipe async', () => {
+describe.concurrent('pipe async', () => {
   beforeAll(() => vi.useFakeTimers());
   describe('#01 => Numbers with async functions, (test with 2)', () => {
     it('#01 => Mix sync and async: (2+1)*2 = 6', async () => {
@@ -57,10 +57,15 @@ describe('pipe async', () => {
     it('#04 => All async: ((((2+1)*2)-3)/2)^2 = 2.25', async () => {
       const piped = pipe(
         addAsync(1),
+        tap(x => console.log(`Intermediate result: ${x}`)),
         timesAsync(2),
+        tap(x => console.log(`Intermediate result: ${x}`)),
         addAsync(-3),
+        tap(x => console.log(`Intermediate result: ${x}`)),
         divisionAsync(2),
+        tap(x => console.log(`Intermediate result: ${x}`)),
         exponentAsync(2),
+        voidAction(x => console.log(`Intermediate result: ${x}`)),
       );
       const result = await piped(2);
       expect(result).toBe(2.25);
@@ -170,19 +175,19 @@ describe('pipe async', () => {
     });
   });
 
-  it('#04 => should handle up to 21 async functions, but with type error', async () => {
+  it('#04 => should handle up to 101 async functions, but with type error', async () => {
     const asyncFn = async (x: number) => Promise.resolve(x + 1);
 
-    type Re = TupleOfLength<typeof asyncFn, 21>;
+    type Re = TupleOfLength<typeof asyncFn, 101>;
     /**
-     * Generates an array of 21 async functions
+     * Generates an array of 101 async functions
      */
-    const array = Array.from({ length: 21 }, () => asyncFn) as Re;
+    const array = Array.from({ length: 101 }, () => asyncFn) as Re;
 
     // @ts-expect-error for test
     const piped = pipe(...array);
     const result = await piped(0);
-    expect(result).toBe(21);
+    expect(result).toBe(101);
   });
 
   describe('#05 => Too much arguments, not typed (async)', () => {

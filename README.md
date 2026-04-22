@@ -32,7 +32,7 @@ bun add @bemedev/pipe
 ## Utilisation
 
 ```typescript
-import { pipe } from '@bemedev/pipeline';
+import { pipe } from '@bemedev/pipe';
 
 // Exemple simple
 const add1 = (x: number) => x + 1;
@@ -188,7 +188,7 @@ processUser({ name: 'alice', age: 30 });
 <details>
 <summary>Changelog complet</summary>
 
-[CHANGE_LOG.md](https://github.com/chlbri/pipeline/blob/main/CHANGE_LOG.md)
+[CHANGELOG.md](https://github.com/chlbri/pipeline/blob/main/CHANGELOG.md)
 
 </details>
 
@@ -212,4 +212,4 @@ chlbri (bri_lvi@icloud.com)
 
 ## Liens
 
-- [Documentation](https://github.com/chlbri/new-package)
+- [Documentation](https://github.com/chlbri/pipeline)

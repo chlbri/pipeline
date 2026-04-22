@@ -38,41 +38,7 @@ type _Last<T extends readonly any[]> = T extends [...any[], infer Last]
 export type MaybePromise<T extends readonly any[], Last = _Last<T>> =
   IsPromiseArray<T> extends true ? Promise<Last> : Last;
 
-export type RecurFn<
-  F2,
-  FRest extends readonly any[] = readonly any[],
-> = FRest extends readonly [infer First, ...infer FNextRest]
-  ? [Fn<[F2], First>, ...RecurFn<First, FNextRest>]
-  : [];
-/**
- * Helper type to check if any function in an array returns a Promise
- */
-export type HasPromise<T extends readonly Fn[]> = T extends readonly [
-  infer First extends Fn,
-  ...infer Rest extends readonly Fn[],
-]
-  ? IsPromise<ReturnType<First>> extends true
-    ? true
-    : HasPromise<Rest>
-  : false;
-
-/**
- * Helper type to get the return type of the last function in an array
- */
-type GetLastReturnType<T extends readonly Fn[]> =
-  number extends T['length']
-    ? any
-    : T extends readonly []
-      ? never
-      : T extends readonly [...any[], infer Last extends Fn]
-        ? ReturnType<Last>
-        : never;
-
-/**
- * Generic type that accepts an array of functions and returns the ReturnType of the last function.
- * If any function returns a Promise, the return type is Promise<Awaited<LastFunctionReturnType>>
- */
-export type PipeReturnType<
-  T extends readonly Fn[],
-  R extends Awaited<GetLastReturnType<T>> = Awaited<GetLastReturnType<T>>,
-> = HasPromise<T> extends true ? Promise<R> : R;
+export type MaybePromiseFn<
+  Args extends any[] = any[],
+  R extends any[] = any[],
+> = (...args: Args) => MaybePromise<R>;

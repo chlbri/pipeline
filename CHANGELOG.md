@@ -13,6 +13,23 @@ ce fichier.
 <details>
 <summary>
 
+## **[1.2.0] - 22/04/2026** => _19:43_
+
+</summary>
+
+- Refactor: `pipe` typings now use `MaybePromiseFn` for better async
+  inference and broader typed pipeline support
+- Add: `tap` alias in `extensions/common`
+- Update: `package.json` exports for `./extensions`
+- Fix: README docs and changelog link
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.1.0] - 22/04/2026** => _08:30_
 
 </summary>

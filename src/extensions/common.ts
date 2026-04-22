@@ -16,3 +16,5 @@ export const voidAction = <S>(fn: Fn<[NoInfer<S>]>): Fn<[S], S> => {
     return value;
   };
 };
+
+export const tap = voidAction;

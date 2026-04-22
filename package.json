@@ -1,6 +1,6 @@
 {
   "name": "@bemedev/pipe",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A utility for creating and managing pipelines in Typescript.",
   "author": {
     "email": "bri_lvi@icloud.com",
@@ -23,6 +23,11 @@
       "require": "./lib/index.cjs"
     },
     "./package.json": "./package.json",
+    "./extensions": {
+      "types": "./lib/extensions/index.d.ts",
+      "import": "./lib/extensions/index.js",
+      "require": "./lib/extensions/index.cjs"
+    },
     "./extensions/*": {
       "types": "./lib/extensions/*.d.ts",
       "import": "./lib/extensions/*.js",

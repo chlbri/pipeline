@@ -20,7 +20,7 @@ import {
 import { pipe } from './pipe';
 import type { TupleOfLength } from './types';
 
-describe('pipe', () => {
+describe.concurrent('pipe', () => {
   describe('#01 => Numbers, (test with 2)', () => {
     const { acceptation, success } = createTests(pipe, {
       transform: fn => fn(2),
@@ -235,7 +235,8 @@ describe('pipe', () => {
         s => s.toUpperCase(),
       );
 
-      expect(piped(1, 'test', true)).toBe('RESULT: 1TESTTRUE');
+      const actual = piped(1, 'test', true);
+      expect(actual).toBe('RESULT: 1TESTTRUE');
     });
   });
 
@@ -247,7 +248,7 @@ describe('pipe', () => {
         (...values: number[]) => {
           return values.reduce((acc, curr) => acc + curr);
         },
-        voidAction(x => console.log('Current value:', x)),
+        voidAction(pipe(x => `Current value : ${x}`, console.log)),
         add(1),
         modulo(8),
         v => `"${v}" is the result`,
