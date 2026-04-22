@@ -1,11 +1,11 @@
 import { identity } from './extensions/common';
+import { flatten, mapArray } from './extensions/fixtures';
 import {
   add,
   division,
   exponent,
   times,
 } from './extensions/numbers/arithmetic';
-import { flatten, mapArray } from './extensions/fixtures';
 import {
   capitalize,
   concat,
@@ -34,6 +34,7 @@ const capitalizeAsync = async (str: string) =>
   Promise.resolve(capitalize(str));
 
 describe('pipe async', () => {
+  beforeAll(() => vi.useFakeTimers());
   describe('#01 => Numbers with async functions, (test with 2)', () => {
     it('#01 => Mix sync and async: (2+1)*2 = 6', async () => {
       const piped = pipe(add(1), timesAsync(2));

@@ -1,6 +1,6 @@
-import type { Fn1, NoTyped, PipeReturnType } from './types';
+import type { Fn, NoTyped, PipeReturnType } from './types';
 
-expectTypeOf<NoTyped>().toEqualTypeOf<[Fn1, Fn1]>();
+expectTypeOf<NoTyped>().toEqualTypeOf<[Fn, Fn]>();
 
 // Test PipeReturnType with empty array
 expectTypeOf<PipeReturnType<[]>>().toEqualTypeOf<never>();

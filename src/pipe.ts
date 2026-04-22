@@ -1,4 +1,5 @@
-import type { Fn1, HasPromise, NextFn } from './types';
+import { isFnPromise } from './pipe.helpers';
+import type { Fn, HasPromise, NextFn } from './types';
 
 /**
  * Creates a function pipeline that applies a series of functions in sequence.
@@ -8,7 +9,7 @@ import type { Fn1, HasPromise, NextFn } from './types';
  * @remarks Typings accepts functions until 20
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
-export function pipe<F1 extends Fn1, F2 extends NextFn<F1>>(
+export function pipe<F1 extends Fn, F2 extends NextFn<F1>>(
   f1: F1,
   f2: F2,
 ): (
@@ -26,7 +27,7 @@ export function pipe<F1 extends Fn1, F2 extends NextFn<F1>>(
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
 >(
@@ -48,7 +49,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -72,7 +73,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -98,7 +99,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -126,7 +127,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -156,7 +157,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -188,7 +189,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -222,7 +223,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -258,7 +259,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -298,7 +299,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -340,7 +341,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -384,7 +385,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -430,7 +431,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -478,7 +479,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -528,7 +529,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -598,7 +599,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -671,7 +672,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -747,7 +748,7 @@ export function pipe<
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  */
 export function pipe<
-  F1 extends Fn1,
+  F1 extends Fn,
   F2 extends NextFn<F1>,
   F3 extends NextFn<F2>,
   F4 extends NextFn<F3>,
@@ -817,24 +818,22 @@ export function pipe<
   ? Promise<ReturnType<F20>>
   : ReturnType<F20>;
 
-export function pipe<T extends readonly Fn1[]>(...fns: T) {
+export function pipe<T extends readonly Fn[]>(...fns: T) {
   return pipe.notTyped(...fns);
 }
 
-type NotTyped_F = <T extends readonly Fn1[]>(
+type NotTyped_F = <T extends readonly Fn[]>(
   ...fns: T
 ) => (...args: Parameters<T[0]>) => any;
 
 const notTyped: NotTyped_F = (...fns) => {
   // Check if any function is async by testing a sample call
-  const hasAsyncFunction = fns.some(fn => {
-    return fn.constructor.name === 'AsyncFunction';
-  });
+  const hasAsyncFunction = fns.some(isFnPromise);
+  const [fn1, ...rest] = fns;
 
   if (hasAsyncFunction) {
     // Use async implementation
     return async (...args) => {
-      const [fn1, ...rest] = fns as unknown as Fn1[];
       let result = await fn1?.(...args);
       for (const fn of rest) result = await fn(result);
       return result;
@@ -842,7 +841,6 @@ const notTyped: NotTyped_F = (...fns) => {
   } else {
     // Use sync implementation for better performance
     return (...args) => {
-      const [fn1, ...rest] = fns as unknown as Fn1[];
       const first = fn1?.(...args);
       return rest.reduce((acc, fn) => fn(acc), first);
     };

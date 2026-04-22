@@ -102,10 +102,15 @@ console.log(addMany(0)); // Affiche 100
 
 La bibliothèque exporte plusieurs types utiles:
 
-- `Fn1`: Type de base pour une fonction à un argument
+- `Fn<Args, R>`: Type de base pour une fonction (remplace `Fn1`)
 - `NextFn<T>`: Fonction prenant comme argument le type de retour de T
 - `TupleOfLength<T, N>`: Tuple de longueur N contenant des éléments de type
   T
+
+Et plusieurs utilitaires runtime:
+
+- `isFnPromise(value)`: Prédicat vérifiant si une valeur est une fonction
+  asynchrone
 
 ## CHANGELOG
 

@@ -1,12 +1,12 @@
 import { createTests } from '@bemedev/dev-utils/vitest-extended';
 import { identity } from './extensions/common';
+import { flatten, mapArray } from './extensions/fixtures';
 import {
   add,
   division,
   exponent,
   times,
 } from './extensions/numbers/arithmetic';
-import { flatten, mapArray } from './extensions/fixtures';
 import {
   capitalize,
   concat,
