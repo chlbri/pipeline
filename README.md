@@ -111,6 +111,77 @@ Et plusieurs utilitaires runtime:
 
 - `isFnPromise(value)`: Prédicat vérifiant si une valeur est une fonction
   asynchrone
+- `ASYNC_CONSTRUCTOR_NAME`: Constante utilisée pour la détection de
+  fonctions asynchrones
+
+## Extensions
+
+La bibliothèque propose des extensions utiles pour manipuler différents
+types de données:
+
+### Extensions pour les chaînes
+
+```typescript
+import {
+  toUpperCase,
+  capitalize,
+  trim,
+} from '@bemedev/pipe/extensions/strings';
+
+const format = pipe(trim, capitalize, toUpperCase);
+
+console.log(format('  hello world  ')); // "HELLO WORLD"
+```
+
+### Extensions pour les nombres
+
+```typescript
+import { isEven, isOdd } from '@bemedev/pipe/extensions/numbers/checkers';
+import { add } from '@bemedev/pipe/extensions/numbers/arithmetic';
+
+const checkEven = isEven(5); // false
+const checkOdd = isOdd(5); // true
+```
+
+### Extensions communes
+
+```typescript
+import { identity, voidAction } from '@bemedev/pipe/extensions/common';
+
+const log = voidAction((val: number) => console.log(val));
+const piped = pipe(
+  (x: number) => x * 2,
+  log, // Affiche le résultat intermédiaire
+  (x: number) => x + 1,
+);
+
+console.log(piped(5)); // Affiche 10, puis retourne 11
+```
+
+#### Cas d'usage réel : Debug et transformation
+
+`voidAction` est particulièrement utile pour ajouter du logging ou du
+debugging dans une chaîne sans modifier les données :
+
+```typescript
+import { voidAction } from '@bemedev/pipe/extensions/common';
+
+const processUser = pipe(
+  (user: { name: string; age: number }) => ({
+    ...user,
+    age: user.age + 1,
+  }),
+  voidAction(user => console.log('✓ Age updated:', user)),
+  user => ({ ...user, name: user.name.toUpperCase() }),
+  voidAction(user => console.log('✓ Name formatted:', user)),
+);
+
+processUser({ name: 'alice', age: 30 });
+// Affiche:
+// ✓ Age updated: { name: 'alice', age: 31 }
+// ✓ Name formatted: { name: 'ALICE', age: 31 }
+// Retourne: { name: 'ALICE', age: 31 }
+```
 
 ## CHANGELOG
 

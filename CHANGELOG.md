@@ -13,6 +13,31 @@ ce fichier.
 <details>
 <summary>
 
+## **[1.1.0] - 22/04/2026** => _08:30_
+
+</summary>
+
+- **BREAKING CHANGE**: Renommer le type `Fn1` en `Fn<Args, R>` (paramètres
+  génériques explicites)
+- Add: nouveau fichier `constants.ts` exportant `ASYNC_CONSTRUCTOR_NAME`
+- Add: nouveau fichier `pipe.helpers.ts` exportant `isFnPromise` (détection
+  de fonction async)
+- Add: nouvelles extensions (booleans, strings, numbers/arithmetic,
+  numbers/checkers, common)
+- Refactor: utiliser `isFnPromise` dans `pipe.ts` pour la détection async
+- Refactor: réorganiser les fonctions et types
+- Fix: ajouter `beforeAll(() => vi.useFakeTimers())` dans la suite de tests
+  async
+- Update: mise à jour de toutes les dépendances
+- <u>Test coverage **_100%_**</u>
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.0.0] - 22/04/2026** => _08:07_
 
 </summary>

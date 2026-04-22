@@ -1,6 +1,8 @@
-import { isValue } from '../common';
+import { isNotValue, isValue } from '../common';
 
 export const isZero = isValue(0);
+
+export const isNotZero = isNotValue(0);
 
 export const compare = (toCompare: number) => {
   const out = (value: number) => {

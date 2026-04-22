@@ -1,10 +1,11 @@
 import { createTests } from '@bemedev/dev-utils/vitest-extended';
-import { identity } from './extensions/common';
+import { identity, voidAction } from './extensions/common';
 import { flatten, mapArray } from './extensions/fixtures';
 import {
   add,
   division,
   exponent,
+  modulo,
   times,
 } from './extensions/numbers/arithmetic';
 import {
@@ -73,9 +74,7 @@ describe('pipe', () => {
         },
         {
           invite: 'Add 1 20 times',
-          parameters: Array.from({ length: 20 }, () =>
-            add(1),
-          ) as TupleOfLength<(x: number) => number, 20>,
+          parameters: Array.from({ length: 20 }, () => add(1)) as any,
           expected: 22,
         },
       ),
@@ -159,27 +158,43 @@ describe('pipe', () => {
      */
     const array = Array.from({ length: 21 }, () => fn) as Re;
 
-    // @ts-expect-error for test
     const piped = pipe(...array);
     expect(piped(0)).toBe(21);
   });
 
-  describe('#05 => Too much arguments, not typed', () => {
-    const fn = (x: number) => x + 1;
+  describe('#05 => Limits of functions typing (100)', () => {
+    const fn = add(1);
+    type TT<N extends number> = TupleOfLength<typeof fn, N>;
+    const buildArray = <T extends number>(length: T) => {
+      return Array.from({ length }, () => fn) as TT<T>;
+    };
 
     it('#01 => 30 functions', () => {
-      const array = Array.from({ length: 30 }, () => fn);
-      const piped = pipe.notTyped(...array);
+      const array = buildArray(30);
+      const piped = pipe(...array);
       expect(piped(0)).toBe(30);
     });
 
-    it('#02 => 100 functions', () => {
-      const array = Array.from({ length: 100 }, () => fn);
-      const piped = pipe.notTyped(...array);
+    it('#02 => 70 functions', () => {
+      const array = buildArray(70);
+      const piped = pipe(...array);
+      expect(piped(0)).toBe(70);
+    });
+
+    it('#04 => 100 functions, just the limit (100), typings safely', () => {
+      const array = buildArray(100);
+      const piped = pipe(...array);
       expect(piped(0)).toBe(100);
     });
 
-    it('#02 => 1000 functions', () => {
+    it('#04 => 101 functions, with type errors, (reach limit of "100")', () => {
+      const array = buildArray(101);
+      // @ts-expect-error too much arguments
+      const piped = pipe(...array);
+      expect(piped(0)).toBe(101);
+    });
+
+    it('#05 => 1000 functions, with notTyped', () => {
       const array = Array.from({ length: 1000 }, () => fn);
       const piped = pipe.notTyped(...array);
       expect(piped(0)).toBe(1000);
@@ -221,6 +236,24 @@ describe('pipe', () => {
       );
 
       expect(piped(1, 'test', true)).toBe('RESULT: 1TESTTRUE');
+    });
+  });
+
+  describe('#07 => voidAction', () => {
+    it('#01 => should handle voidAction', () => {
+      // const pipe2 = <[F1, NextFn<F1>]>(...fns:)
+
+      const piped = pipe(
+        (...values: number[]) => {
+          return values.reduce((acc, curr) => acc + curr);
+        },
+        voidAction(x => console.log('Current value:', x)),
+        add(1),
+        modulo(8),
+        v => `"${v}" is the result`,
+      );
+
+      expect(piped(1, 2, 3)).toBe('"7" is the result');
     });
   });
 });
