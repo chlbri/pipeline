@@ -21,6 +21,7 @@ export default defineConfig({
     slowTestThreshold: 3000,
     globals: true,
     logHeapUsage: true,
+    setupFiles: ['./vitest.setup.ts'],
     coverage: {
       enabled: true,
       reportsDirectory: '.coverage',

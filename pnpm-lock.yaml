@@ -59,6 +59,9 @@ importers:
       vitest:
         specifier: ^4.1.4
         version: 4.1.4(@types/node@25.6.0)(@vitest/coverage-v8@4.1.4)(@vitest/ui@4.1.4)(vite@8.0.9(@types/node@25.6.0))
+      zx:
+        specifier: ^8.8.5
+        version: 8.8.5
 
 packages:
 
@@ -1566,6 +1569,11 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
+  zx@8.8.5:
+    resolution: {integrity: sha512-SNgDF5L0gfN7FwVOdEFguY3orU5AkfFZm9B5YSHog/UDHv+lvmd82ZAsOenOkQixigwH2+yyH198AwNdKhj+RA==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
+
 snapshots:
 
   '@babel/helper-string-parser@7.27.1': {}
@@ -2762,3 +2770,5 @@ snapshots:
     dependencies:
       siginfo: 2.0.0
       stackback: 0.0.2
+
+  zx@8.8.5: {}

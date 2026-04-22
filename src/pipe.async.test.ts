@@ -1,18 +1,20 @@
-import { identity, tap, voidAction } from './extensions/common';
-import { flatten, mapArray } from './extensions/fixtures';
 import {
   add,
-  division,
-  exponent,
-  times,
-} from './extensions/numbers/arithmetic';
-import {
   capitalize,
   concat,
+  division,
   escapeRegExp,
+  exponent,
+  flatten,
+  identity,
+  mapArray,
   replaceAll,
+  tap,
+  times,
   toUpperCase,
-} from './extensions/strings';
+  voidAction,
+} from './extensions';
+
 import { pipe } from './pipe';
 import type { TupleOfLength } from './types';
 
@@ -33,28 +35,30 @@ const toLowerCaseAsync = async (str: string) =>
 const capitalizeAsync = async (str: string) =>
   Promise.resolve(capitalize(str));
 
-describe.concurrent('pipe async', () => {
+describe('pipe async', () => {
   beforeAll(() => vi.useFakeTimers());
+
   describe('#01 => Numbers with async functions, (test with 2)', () => {
-    it('#01 => Mix sync and async: (2+1)*2 = 6', async () => {
+    it.concurrent('#01 => Mix sync and async: (2+1)*2 = 6', async () => {
       const piped = pipe(add(1), timesAsync(2));
       const result = await piped(2);
       expect(result).toBe(6);
     });
 
-    it('#02 => Mix sync and async: ((2+1)*2)-3 = 3', async () => {
+    it.concurrent('#02 => Mix sync and async: ((2+1)*2)-3 = 3', async () => {
       const piped = pipe(addAsync(1), times(2), add(-3));
       const result = await piped(2);
       expect(result).toBe(3);
     });
 
-    it('#03 => Mix sync and async: (((2+1)*2)-3)/2 = 1.5', async () => {
+    it.concurrent('#03 => Mix sync and async: (((2+1)*2)-3)/2 = 1.5', async () => {
       const piped = pipe(add(1), timesAsync(2), add(-3), divisionAsync(2));
       const result = await piped(2);
       expect(result).toBe(1.5);
     });
 
-    it('#04 => All async: ((((2+1)*2)-3)/2)^2 = 2.25', async () => {
+    describe('#04 => All async: ((((2+1)*2)-3)/2)^2 = 2.25', async () => {
+      const log = vi.spyOn(console, 'log');
       const piped = pipe(
         addAsync(1),
         tap(x => console.log(`Intermediate result: ${x}`)),
@@ -67,11 +71,38 @@ describe.concurrent('pipe async', () => {
         exponentAsync(2),
         voidAction(x => console.log(`Intermediate result: ${x}`)),
       );
-      const result = await piped(2);
-      expect(result).toBe(2.25);
+
+      let result: number;
+      it('#00 => compute', async () => {
+        result = await piped(2);
+      });
+
+      it('#01 => should compute the correct result', () => {
+        expect(result).toBe(2.25);
+      });
+
+      it('#02 => logs the first intermediate result as 3', () => {
+        expect(log).toHaveBeenCalledWith('Intermediate result: 3');
+      });
+
+      it('#03 => logs the second intermediate result as 6', () => {
+        expect(log).toHaveBeenCalledWith('Intermediate result: 6');
+      });
+
+      it('#04 => logs the third intermediate result as 3', () => {
+        expect(log).toHaveBeenCalledWith('Intermediate result: 3');
+      });
+
+      it('#05 => logs the fourth intermediate result as 1.5', () => {
+        expect(log).toHaveBeenCalledWith('Intermediate result: 1.5');
+      });
+
+      it('#06 => logs the final intermediate result as 2.25', () => {
+        expect(log).toHaveBeenCalledWith('Intermediate result: 2.25');
+      });
     });
 
-    it('#05 => Complex mix: ((((((((2+1)*2)-3)/2)^2)+10)/2)-1)*3/5 = 3.075', async () => {
+    it.concurrent('#05 => Complex mix: ((((((((2+1)*2)-3)/2)^2)+10)/2)-1)*3/5 = 3.075', async () => {
       const piped = pipe(
         addAsync(1),
         times(2),
@@ -88,7 +119,7 @@ describe.concurrent('pipe async', () => {
       expect(result).toBe(3.075);
     });
 
-    it('#06 => Add 1 async 20 times', async () => {
+    it.concurrent('#06 => Add 1 async 20 times', async () => {
       const asyncAdd1 = addAsync(1);
       const array = Array.from(
         { length: 20 },
@@ -100,7 +131,7 @@ describe.concurrent('pipe async', () => {
     });
   });
 
-  it('#02 => should handle string transformations with async functions', async () => {
+  it.concurrent('#02 => should handle string transformations with async functions', async () => {
     const piped = pipe(
       trimAsync,
       toUpperCase,
@@ -120,7 +151,7 @@ describe.concurrent('pipe async', () => {
   });
 
   describe('#03 => should handle objects with async functions', () => {
-    it('#01 => simple object with async', async () => {
+    it.concurrent('#01 => simple object with async', async () => {
       const asyncAdd = async (obj: { a: number }) =>
         Promise.resolve({ ...obj, b: obj.a + 1 });
 
@@ -129,7 +160,7 @@ describe.concurrent('pipe async', () => {
       expect(result).toEqual({ a: 1, b: 2, c: 4 });
     });
 
-    describe('#02 => Complex MapArray with async', () => {
+    describe.concurrent('#02 => Complex MapArray with async', () => {
       const asyncAddProp = async (obj: { a: number }) =>
         Promise.resolve({ ...obj, b: obj.a + 1 });
 
@@ -153,7 +184,7 @@ describe.concurrent('pipe async', () => {
       });
     });
 
-    it('#03 => Flatten with async', async () => {
+    it.concurrent('#03 => Flatten with async', async () => {
       const nestedObjectAsync = async () =>
         Promise.resolve({
           a: {
@@ -175,7 +206,7 @@ describe.concurrent('pipe async', () => {
     });
   });
 
-  it('#04 => should handle up to 101 async functions, but with type error', async () => {
+  it.concurrent('#04 => should handle up to 101 async functions, but with type error', async () => {
     const asyncFn = async (x: number) => Promise.resolve(x + 1);
 
     type Re = TupleOfLength<typeof asyncFn, 101>;
@@ -190,7 +221,7 @@ describe.concurrent('pipe async', () => {
     expect(result).toBe(101);
   });
 
-  describe('#05 => Too much arguments, not typed (async)', () => {
+  describe.concurrent('#05 => Too much arguments, not typed (async)', () => {
     const asyncFn = async (x: number) => Promise.resolve(x + 1);
     const syncFn = (x: number) => x + 1;
 

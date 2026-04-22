@@ -1,22 +1,24 @@
 import { createTests } from '@bemedev/dev-utils/vitest-extended';
-import { identity, voidAction } from './extensions/common';
-import { flatten, mapArray } from './extensions/fixtures';
+
 import {
   add,
-  division,
-  exponent,
-  modulo,
-  times,
-} from './extensions/numbers/arithmetic';
-import {
   capitalize,
   concat,
+  division,
   escapeRegExp,
+  exponent,
+  flatten,
+  identity,
+  mapArray,
+  modulo,
   replaceAll,
+  times,
   toLowerCase,
   toUpperCase,
   trim,
-} from './extensions/strings';
+  voidAction,
+} from './extensions';
+
 import { pipe } from './pipe';
 import type { TupleOfLength } from './types';
 

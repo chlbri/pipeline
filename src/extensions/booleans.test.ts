@@ -1,8 +1,8 @@
 import { createTests } from '@bemedev/dev-utils/vitest-extended';
-import { toogle, toNumber } from './booleans';
+import { toggle, toNumber } from './booleans';
 
 describe('#01 => sswitch', () => {
-  const { acceptation, success } = createTests(toogle);
+  const { acceptation, success } = createTests(toggle);
 
   describe('#00 => Acceptation', acceptation);
 
