@@ -13,6 +13,21 @@ ce fichier.
 <details>
 <summary>
 
+## **[1.3.1] - 22/04/2026** => _23:56_
+
+</summary>
+
+- Update: bump `@bemedev/dev-utils` to `^0.6.4`
+- Fix: improve built import tests with async pipeline coverage and fake
+  timer setup
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.2.0] - 22/04/2026** => _19:43_
 
 </summary>
