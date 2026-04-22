@@ -61,7 +61,7 @@ expectTypeOf<
   PipeReturnType<
     [
       (x: number) => Promise<string>,
-      (x: string) => Promise<boolean>,
+      (x: Date) => Promise<boolean>,
       (x: boolean) => Promise<number>,
     ]
   >

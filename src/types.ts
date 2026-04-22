@@ -1,7 +1,13 @@
-export type Fn1 = (arg: any) => any;
+export type Fn1 = (...args: any[]) => any;
 export type NextFn<T extends Fn1, R = any> = (
   arg: Awaited<ReturnType<T>>,
 ) => R;
+
+export type Equals<X, Y> = X extends Y
+  ? Y extends X
+    ? true
+    : false
+  : false;
 
 export type TupleOfLength<
   T,

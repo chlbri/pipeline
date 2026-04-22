@@ -54,6 +54,7 @@ export function mapArray<T extends readonly string[]>(...keys: T) {
   return (value: Record<T[number], any>) => {
     const len = keys.length;
     if (len === 1) return (value as any)[keys[0]];
+    console.log('value', '=>', value);
     return keys.map(key => (value as any)[key]);
   };
 }

@@ -1,6 +1,6 @@
 {
   "name": "@bemedev/pipe",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A utility for creating and managing pipelines in Typescript.",
   "author": {
     "email": "bri_lvi@icloud.com",
@@ -101,7 +101,7 @@
     }
   ],
   "devDependencies": {
-    "@bemedev/dev-utils": "^0.5.2",
+    "@bemedev/dev-utils": "^0.6.2",
     "@size-limit/file": "^12.1.0",
     "@types/node": "^25.6.0",
     "@vitest/coverage-v8": "^3.2.4",
@@ -110,14 +110,13 @@
     "globals": "^17.5.0",
     "husky": "^9.1.7",
     "onchange": "^7.1.0",
-    "oxfmt": "^0.45.0",
-    "oxlint": "^1.60.0",
-    "prettier": "^3.8.2",
+    "oxfmt": "^0.46.0",
+    "oxlint": "^1.61.0",
     "pretty-quick": "^4.2.2",
-    "rolldown": "1.0.0-rc.15",
+    "rolldown": "1.0.0-rc.16",
     "size-limit": "^12.1.0",
     "tslib": "^2.8.1",
-    "typescript": "^6.0.2",
+    "typescript": "^6.0.3",
     "vitest": "^3.2.4"
   },
   "pnpm": {

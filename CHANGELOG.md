@@ -13,11 +13,26 @@ ce fichier.
 <details>
 <summary>
 
+## **[0.2.0] - 22/04/2026** => _00:25_
+
+</summary>
+
+- Update: mise à jour des dépendances (feat: Upgrade deps)
+- Fix: ajustements mineurs suite à la mise à jour des dépendances
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[0.1.1] - 13/04/2026** => _00:00_
 
 </summary>
 
-- Refactor: déplacer `flatten` et `mapArray` vers `fixtures.ts` (usage test uniquement)
+- Refactor: déplacer `flatten` et `mapArray` vers `fixtures.ts` (usage test
+  uniquement)
 - Update: migrer le bundler de rollup vers rolldown
 - Update: migrer le linter de eslint vers oxlint
 - Update: migrer le formateur de prettier vers oxfmt
