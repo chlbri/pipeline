@@ -1,10 +1,10 @@
-import { add, identity, map, tap } from '../../extensions';
+import { addBy, identity, map, tap } from '../../extensions';
 import { pipe } from '../../pipe';
 
 describe('#08 => map', () => {
   describe('#01 => should handle map', () => {
     const piped = pipe(
-      add(2),
+      addBy(2),
       map(helper => [
         helper({
           cond: value => value === 5,

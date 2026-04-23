@@ -7,19 +7,19 @@ type FnN = (a: number, b: number) => number;
  * @example
  *  ```typescript
  * import { operation } from './numbers';
- * const add = operation((a, b) => a + b);
- * const result = add(2)(3); // 5
- * const times = operation((a, b) => a * b);
- * const result2 = times(4)(5); // 20
+ * const addBy = operation((a, b) => a + b);
+ * const result = addBy(2)(3); // 5
+ * const timesBy = operation((a, b) => a * b);
+ * const result2 = timesBy(4)(5); // 20
  * ```typescript
  */
 export const operation = (fn: FnN) => {
   return (toApply: number) => (value: number) => fn(value, toApply);
 };
 
-export const add = operation((a, b) => a + b);
-export const times = operation((a, b) => a * b);
-export const division = operation((a, b) => a / b);
-export const multiply = operation((a, b) => a * b);
-export const modulo = operation((a, b) => a % b);
-export const exponent = operation((a, b) => a ** b);
+export const addBy = operation((a, b) => a + b);
+export const timesBy = operation((a, b) => a * b);
+export const divisionBy = operation((a, b) => a / b);
+export const multiplyBy = operation((a, b) => a * b);
+export const moduloBy = operation((a, b) => a % b);
+export const exponentBy = operation((a, b) => a ** b);

@@ -1,4 +1,4 @@
-import { multiply, paramArray } from '../../extensions';
+import { multiplyBy, paramArray } from '../../extensions';
 import { pipe } from '../../pipe';
 
 describe('#10 => paramArray', () => {
@@ -7,7 +7,7 @@ describe('#10 => paramArray', () => {
     paramArray((...nums) => {
       return nums.reduce((acc, curr) => acc * curr, 1);
     }),
-    multiply(1.5),
+    multiplyBy(1.5),
   );
 
   it('#01 => (1, 2, 3) => 9', () => {

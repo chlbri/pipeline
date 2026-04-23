@@ -3,6 +3,8 @@ import { exclude } from '@bemedev/dev-utils/vitest-exclude';
 import { defineConfig } from 'vitest/config';
 import tsconfig from './tsconfig.json';
 
+const IS_EXTENSION = process.env.VITEST_VSCODE === 'true';
+
 export default defineConfig({
   plugins: [
     aliasTs(tsconfig as any),
@@ -11,7 +13,11 @@ export default defineConfig({
         '**/index.ts',
         'src/types.ts',
         '**/**.test-d.ts',
+        '**/__tests__/**',
       ],
+      ignoreTestFiles: IS_EXTENSION
+        ? ['**/__tests__/built/**']
+        : undefined,
     }),
   ],
   test: {

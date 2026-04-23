@@ -1,4 +1,4 @@
-import { add, modulo, voidAction } from '../../extensions';
+import { addBy, moduloBy, voidAction } from '../../extensions';
 import { pipe } from '../../pipe';
 
 describe('#07 => voidAction', () => {
@@ -8,8 +8,8 @@ describe('#07 => voidAction', () => {
         return values.reduce((acc, curr) => acc + curr);
       },
       voidAction(pipe(x => `Current value : ${x}`, console.log)),
-      add(1),
-      modulo(8),
+      addBy(1),
+      moduloBy(8),
       v => `"${v}" is the result`,
     );
 

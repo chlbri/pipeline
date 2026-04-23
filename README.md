@@ -54,7 +54,7 @@ npm install @bemedev/pipe
 ### bun
 
 ```bash
-bun add @bemedev/pipe
+bun addBy @bemedev/pipe
 ```
 
 <br/>
@@ -976,7 +976,7 @@ import { ... } from '@bemedev/pipe/extensions';
 ```
 
 Toutes les opérations suivent la convention **`operation(toApply)(value)`**
-= `fn(value, toApply)`. Ainsi `add(10)(5)` = `5 + 10 = 15`.
+= `fn(value, toApply)`. Ainsi `addBy(10)(5)` = `5 + 10 = 15`.
 
 ---
 
@@ -986,9 +986,9 @@ Toutes les opérations suivent la convention **`operation(toApply)(value)`**
 operation(fn: (a: number, b: number) => number): (toApply: number) => (value: number) => number
 ```
 
-Fabrique d'opérations arithmétiques curryfiées. Utilisée pour créer `add`,
-`times`, `division`, `modulo` et `exponent`. Permet de définir toute
-opération binaire personnalisée.
+Fabrique d'opérations arithmétiques curryfiées. Utilisée pour créer
+`addBy`, `timesBy`, `divisionBy`, `moduloBy` et `exponentBy`. Permet de
+définir toute opération binaire personnalisée.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1004,76 +1004,76 @@ sqrt(16); // 4
 
 ---
 
-### `add`
+### `addBy`
 
 ```typescript
-add(n: number): (value: number) => number
+addBy(n: number): (value: number) => number
 ```
 
 Additionne `n` à la valeur.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { add } from '@bemedev/pipe/extensions/numbers/arithmetic';
+import { addBy } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
-const addTax = pipe((price: number) => price, add(20));
+const addTax = pipe((price: number) => price, addBy(20));
 
 addTax(100); // 120
 ```
 
 ---
 
-### `times`
+### `timesBy`
 
 ```typescript
-times(n: number): (value: number) => number
+timesBy(n: number): (value: number) => number
 ```
 
 Multiplie la valeur par `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { times } from '@bemedev/pipe/extensions/numbers/arithmetic';
+import { timesBy } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
-const double = pipe((x: number) => x, times(2));
+const double = pipe((x: number) => x, timesBy(2));
 
 double(7); // 14
 ```
 
 ---
 
-### `division`
+### `divisionBy`
 
 ```typescript
-division(n: number): (value: number) => number
+divisionBy(n: number): (value: number) => number
 ```
 
 Divise la valeur par `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { division } from '@bemedev/pipe/extensions/numbers/arithmetic';
+import { divisionBy } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
-const half = pipe((x: number) => x, division(2));
+const half = pipe((x: number) => x, divisionBy(2));
 
 half(42); // 21
 ```
 
 ---
 
-### `modulo`
+### `moduloBy`
 
 ```typescript
-modulo(n: number): (value: number) => number
+moduloBy(n: number): (value: number) => number
 ```
 
-Retourne le reste de la division de la valeur par `n`.
+Retourne le reste de la divisionBy de la valeur par `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { modulo } from '@bemedev/pipe/extensions/numbers/arithmetic';
+import { moduloBy } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
-const remainder = pipe((x: number) => x, modulo(3));
+const remainder = pipe((x: number) => x, moduloBy(3));
 
 remainder(10); // 1  ← 10 % 3
 remainder(9); // 0
@@ -1081,19 +1081,19 @@ remainder(9); // 0
 
 ---
 
-### `exponent`
+### `exponentBy`
 
 ```typescript
-exponent(n: number): (value: number) => number
+exponentBy(n: number): (value: number) => number
 ```
 
 Élève la valeur à la puissance `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { exponent } from '@bemedev/pipe/extensions/numbers/arithmetic';
+import { exponentBy } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
-const square = pipe((x: number) => x, exponent(2));
+const square = pipe((x: number) => x, exponentBy(2));
 
 square(5); // 25
 square(3); // 9
@@ -1104,20 +1104,20 @@ square(3); // 9
 ```typescript
 import { pipe } from '@bemedev/pipe';
 import {
-  add,
-  times,
-  division,
-  modulo,
-  exponent,
+  addBy,
+  timesBy,
+  divisionBy,
+  moduloBy,
+  exponentBy,
 } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
 const formula = pipe(
   (x: number) => x,
-  add(10), // + 10
-  times(3), // × 3
-  division(5), // ÷ 5
-  modulo(7), // % 7
-  exponent(2), // ²
+  addBy(10), // + 10
+  timesBy(3), // × 3
+  divisionBy(5), // ÷ 5
+  moduloBy(7), // % 7
+  exponentBy(2), // ²
 );
 
 formula(5); // (((5+10)×3)÷5)%7)² = (9%7)² = 4
@@ -1150,7 +1150,7 @@ import { isZero } from '@bemedev/pipe/extensions/numbers/checkers';
 
 const checkDenominator = pipe((n: number) => n, isZero);
 
-checkDenominator(0); // true  ← division impossible
+checkDenominator(0); // true  ← divisionBy impossible
 checkDenominator(5); // false
 ```
 
@@ -1168,12 +1168,12 @@ Retourne `true` si la valeur est strictement différente de `0`. Équivalent
 ```typescript
 import { pipe } from '@bemedev/pipe';
 import { isNotZero } from '@bemedev/pipe/extensions/numbers/checkers';
-import { division } from '@bemedev/pipe/extensions/numbers/arithmetic';
+import { divisionBy } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
 const safeDivide = pipe((n: number) => n, isNotZero);
 
 safeDivide(5); // true  ← peut diviser
-safeDivide(0); // false ← division par zéro
+safeDivide(0); // false ← divisionBy par zéro
 ```
 
 ---

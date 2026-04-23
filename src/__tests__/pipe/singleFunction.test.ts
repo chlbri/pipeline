@@ -1,9 +1,9 @@
-import { add } from '../../extensions';
+import { addBy } from '../../extensions';
 import { pipe } from '../../pipe';
 
 describe('#00 => only one fn, ideal to build functions', () => {
   it('#01 => should handle only one function', () => {
-    const piped = pipe(add(1));
+    const piped = pipe(addBy(1));
     expect(piped(1)).toBe(2);
   });
 

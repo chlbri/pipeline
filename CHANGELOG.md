@@ -13,6 +13,27 @@ ce fichier.
 <details>
 <summary>
 
+## **[1.5.0] - 23/04/2026** => _14:30_
+
+</summary>
+
+- **BREAKING**: Rename arithmetic function exports from `add`, `times`,
+  `division`, `multiply`, `modulo`, `exponent` to `addBy`, `timesBy`,
+  `divisionBy`, `multiplyBy`, `moduloBy`, `exponentBy` for clarity and
+  consistency
+- Refactor: reorganize test files into `src/__tests__/built/` structure for
+  better test categorization
+- Update: modify all test imports and usages to reflect new arithmetic
+  function names
+- <u>Test coverage **_100%_**</u>
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.4.0] - 23/04/2026** => _10:22_
 
 </summary>

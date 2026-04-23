@@ -1,16 +1,16 @@
 import {
-  add,
+  addBy,
   capitalize,
   concat,
-  division,
+  divisionBy,
   escapeRegExp,
-  exponent,
+  exponentBy,
   flatten,
   identity,
   mapArray,
   replaceAll,
   tap,
-  times,
+  timesBy,
   toUpperCase,
   voidAction,
 } from '../extensions';
@@ -40,19 +40,24 @@ describe('pipe async', () => {
 
   describe('#01 => Numbers with async functions, (test with 2)', () => {
     it.concurrent('#01 => Mix sync and async: (2+1)*2 = 6', async () => {
-      const piped = pipe(add(1), timesAsync(2));
+      const piped = pipe(addBy(1), timesAsync(2));
       const result = await piped(2);
       expect(result).toBe(6);
     });
 
     it.concurrent('#02 => Mix sync and async: ((2+1)*2)-3 = 3', async () => {
-      const piped = pipe(addAsync(1), times(2), add(-3));
+      const piped = pipe(addAsync(1), timesBy(2), addBy(-3));
       const result = await piped(2);
       expect(result).toBe(3);
     });
 
     it.concurrent('#03 => Mix sync and async: (((2+1)*2)-3)/2 = 1.5', async () => {
-      const piped = pipe(add(1), timesAsync(2), add(-3), divisionAsync(2));
+      const piped = pipe(
+        addBy(1),
+        timesAsync(2),
+        addBy(-3),
+        divisionAsync(2),
+      );
       const result = await piped(2);
       expect(result).toBe(1.5);
     });
@@ -105,21 +110,21 @@ describe('pipe async', () => {
     it.concurrent('#05 => Complex mix: ((((((((2+1)*2)-3)/2)^2)+10)/2)-1)*3/5 = 3.075', async () => {
       const piped = pipe(
         addAsync(1),
-        times(2),
-        add(-3),
+        timesBy(2),
+        addBy(-3),
         divisionAsync(2),
-        exponent(2),
+        exponentBy(2),
         addAsync(10),
-        division(2),
-        add(-1),
+        divisionBy(2),
+        addBy(-1),
         timesAsync(3),
-        division(5),
+        divisionBy(5),
       );
       const result = await piped(2);
       expect(result).toBe(3.075);
     });
 
-    it.concurrent('#06 => Add 1 async 20 times', async () => {
+    it.concurrent('#06 => Add 1 async 20 timesBy', async () => {
       const asyncAdd1 = addAsync(1);
       const array = Array.from(
         { length: 20 },

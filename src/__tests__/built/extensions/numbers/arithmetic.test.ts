@@ -37,12 +37,12 @@ describe('All imports', () => {
 
       const SUCCESS = [
         'operation',
-        'add',
-        'times',
-        'division',
-        'modulo',
-        'exponent',
-        'multiply',
+        'addBy',
+        'timesBy',
+        'divisionBy',
+        'moduloBy',
+        'exponentBy',
+        'multiplyBy',
       ] as const;
 
       describe('#01 => Not inside arithmetic', () => {

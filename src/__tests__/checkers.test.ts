@@ -1,5 +1,10 @@
 import { createTests } from '@bemedev/dev-utils/vitest-extended';
-import { compare, isNotZero, isZero, sign } from './checkers';
+import {
+  compare,
+  isNotZero,
+  isZero,
+  sign,
+} from '../extensions/numbers/checkers';
 
 describe('numbers checkers', () => {
   describe('#01 => isZero', () => {

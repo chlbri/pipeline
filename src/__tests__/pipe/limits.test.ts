@@ -1,9 +1,9 @@
-import { add } from '../../extensions';
+import { addBy } from '../../extensions';
 import { pipe } from '../../pipe';
 import type { TupleOfLength } from '../../types';
 
 describe('#05 => Limits of functions typing (100)', () => {
-  const fn = add(1);
+  const fn = addBy(1);
   type TT<N extends number> = TupleOfLength<typeof fn, N>;
   const buildArray = <T extends number>(length: T) => {
     return Array.from({ length }, () => fn) as TT<T>;

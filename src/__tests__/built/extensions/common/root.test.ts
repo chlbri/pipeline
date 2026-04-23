@@ -14,12 +14,12 @@ describe('All imports', () => {
 
       const FAILS = [
         'operation',
-        'add',
-        'times',
-        'division',
-        'modulo',
-        'exponent',
-        'multiply',
+        'addBy',
+        'timesBy',
+        'divisionBy',
+        'moduloBy',
+        'exponentBy',
+        'multiplyBy',
         'isZero',
         'isNotZero',
         'compare',
