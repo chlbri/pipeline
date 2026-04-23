@@ -1,12 +1,11 @@
 {
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/.fixtures.ts"],
   "compilerOptions": {
     "lib": ["dom", "esnext"],
     "importHelpers": true,
     "target": "ESNext",
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./src",
     "outDir": "./lib",
     "resolveJsonModule": true,
     "strict": true,

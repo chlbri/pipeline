@@ -13,6 +13,27 @@ ce fichier.
 <details>
 <summary>
 
+## **[1.4.0] - 23/04/2026** => _10:22_
+
+</summary>
+
+- Add: `map` helper in `extensions/common` for condition-based
+  transformation, and `toggleMap` for boolean toggling
+- Add: `tap` alias for `voidAction` to enable pipeline side effects without
+  changing the value
+- Update: restructure `src/extensions/common` into dedicated extension
+  files
+- Update: export `./extensions/common` from `package.json`
+- Fix: exclude TypeScript files from the `rolldown` build with `excludesTS`
+- Fix: improve console mocking in `vitest.setup.ts`
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.3.1] - 22/04/2026** => _23:56_
 
 </summary>

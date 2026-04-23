@@ -9,11 +9,14 @@ import {
   exponent,
   flatten,
   identity,
+  map,
   mapArray,
   modulo,
   replaceAll,
+  tap,
   times,
   toLowerCase,
+  toggleMap,
   toUpperCase,
   trim,
   voidAction,
@@ -56,6 +59,7 @@ describe.concurrent('pipe', () => {
       });
     });
   });
+
   describe('#01 => Numbers, (test with 2)', () => {
     const { acceptation, success } = createTests(pipe, {
       transform: fn => fn(2),
@@ -290,6 +294,119 @@ describe.concurrent('pipe', () => {
       );
 
       expect(piped(1, 2, 3)).toBe('"7" is the result');
+    });
+  });
+
+  describe('#08 => map', () => {
+    describe('#01 => should handle map', () => {
+      const piped = pipe(
+        add(2),
+        map(helper => [
+          helper({
+            cond: value => value === 5,
+            fn: v => v + 10,
+          }),
+          helper({
+            cond: value => value === 2,
+            fn: v => v * 10,
+          }),
+        ]),
+      );
+
+      it('#01 => 3 => 15', () => {
+        expect(piped(3)).toEqual(15);
+      });
+
+      it('#02 => 0 => 20', () => {
+        expect(piped(0)).toEqual(20);
+      });
+    });
+
+    describe('#02 => union', () => {
+      const log = vi.fn();
+
+      const piped = pipe(
+        (x: number | string | boolean) => x,
+        map(helper => [
+          helper<number>({
+            cond: value => typeof value === 'number',
+            fn: v => `${v * 2}`,
+          }),
+
+          helper<boolean>({
+            cond: value => typeof value === 'number',
+            fn: identity,
+          }),
+
+          helper<string>({
+            cond: value => typeof value === 'string',
+            fn: v => v.toUpperCase(),
+          }),
+        ]),
+        tap(log),
+      );
+
+      it('#01 => 3 => "6"', () => {
+        expect(piped(3)).toBe('6');
+      });
+
+      it('#02 => "test" => "TEST"', () => {
+        expect(piped('test')).toBe('TEST');
+      });
+
+      it('#03 => true => true, identity', () => {
+        expect(piped(true)).toBe(true);
+      });
+
+      describe('#04 => console', () => {
+        it('#01 => Called with "6"', () => {
+          expect(log).toHaveBeenNthCalledWith(1, '6');
+        });
+
+        it('#02 => Called with "TEST"', () => {
+          expect(log).toHaveBeenNthCalledWith(2, 'TEST');
+        });
+
+        it('#03 => Called with true', () => {
+          expect(log).toHaveBeenNthCalledWith(3, true);
+        });
+      });
+    });
+  });
+
+  describe('#09 => toggleMap', () => {
+    const condition = <T extends number>(x: T) => x > 5;
+    const truthy = <T extends number>(x: T) => x * 2;
+    const falsy = <T extends number>(x: T) => x + 10;
+
+    describe('#01 => object arg', () => {
+      const piped = pipe(
+        (x: number) => x,
+        toggleMap({ truthy, falsy, condition }),
+      );
+
+      it('#01 => 3 => 13', () => {
+        expect(piped(3)).toBe(13);
+      });
+
+      it('#02 => 6 => 12', () => {
+        expect(piped(6)).toBe(12);
+      });
+    });
+
+    describe('#02 => param args', () => {
+      const piped = pipe(
+        (x: number) => x,
+        toggleMap(condition, truthy, falsy),
+      );
+
+      it('#01 => 3 => 13', () => {
+        expect(piped(3)).toBe(13);
+      });
+
+      it('#02 => 6 => 12', () => {
+        expect(piped(6)).toBe(12);
+      });
     });
   });
 });

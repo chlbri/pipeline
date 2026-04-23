@@ -20,6 +20,7 @@ export default defineConfig({
     passWithNoTests: true,
     slowTestThreshold: 3000,
     globals: true,
+    hookTimeout: 50_000,
     logHeapUsage: true,
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
