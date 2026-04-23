@@ -7,9 +7,9 @@ import { createTests } from '@bemedev/dev-utils/vitest-extended';
 import { add, division, exponent, times } from './extensions';
 import { $ } from 'zx';
 
-const IS_EXTENSION = process.env.VITEST_VSCODE === 'true';
+export const IS_EXTENSION = process.env.VITEST_VSCODE === 'true';
 
-describe.skipIf(IS_EXTENSION)('All imports', () => {
+describe('All imports', () => {
   beforeAll(async () => {
     vi.useFakeTimers();
     await $`pnpm run build`;
@@ -171,6 +171,8 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
         'voidAction',
         'tap',
         'flatten',
+        'map',
+        'toggleMap',
         'mapArray',
         'operation',
         'add',
@@ -235,6 +237,8 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
         'isNotValue',
         'voidAction',
         'tap',
+        'map',
+        'toggleMap',
         'flatten',
         'mapArray',
       ] as const;
@@ -283,6 +287,8 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
         'isNotValue',
         'voidAction',
         'tap',
+        'map',
+        'toggleMap',
         'flatten',
         'mapArray',
       ] as const;
@@ -302,7 +308,346 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
       });
     });
 
-    describe('#04 => ./extensions/booleans', () => {
+    describe('#04 => ./extensions/common/flatten', () => {
+      const helper = async (fn: string) => {
+        return import(`${THIS1}/extensions/common/flatten`).then(m => {
+          const _fn = m[fn];
+          expect(_fn).toBeDefined();
+          expect(_fn).toBeTypeOf('function');
+          return _fn;
+        });
+      };
+
+      const FAILS = [
+        'identity',
+        'isValue',
+        'isNotValue',
+        'voidAction',
+        'tap',
+        'map',
+        'toggleMap',
+        'mapArray',
+        'operation',
+        'add',
+        'times',
+        'division',
+        'modulo',
+        'exponent',
+        'isZero',
+        'isNotZero',
+        'compare',
+        'sign',
+        'toggle',
+        'toNumber',
+        'toUpperCase',
+        'toLowerCase',
+        'trim',
+        'capitalize',
+        'escapeRegExp',
+        'replaceAll',
+        'concat',
+      ] as const;
+
+      const SUCCESS = ['flatten'] as const;
+
+      describe('#01 => Not inside flatten', () => {
+        test.fails.each(FAILS.map(value => [value]))(
+          '#%# => %s does not exist',
+          helper,
+        );
+      });
+
+      describe('#02 => Inside flatten', () => {
+        test.each(SUCCESS.map(value => [value]))(
+          '#%# => %s exists',
+          helper,
+        );
+      });
+    });
+
+    describe('#05 => ./extensions/common/identity', () => {
+      const helper = async (fn: string) => {
+        return import(`${THIS1}/extensions/common/identity`).then(m => {
+          const _fn = m[fn];
+          expect(_fn).toBeDefined();
+          expect(_fn).toBeTypeOf('function');
+          return _fn;
+        });
+      };
+
+      const FAILS = [
+        'isValue',
+        'isNotValue',
+        'flatten',
+        'voidAction',
+        'tap',
+        'map',
+        'toggleMap',
+        'mapArray',
+        'operation',
+        'add',
+        'times',
+        'division',
+        'modulo',
+        'exponent',
+        'isZero',
+        'isNotZero',
+        'compare',
+        'sign',
+        'toggle',
+        'toNumber',
+        'toUpperCase',
+        'toLowerCase',
+        'trim',
+        'capitalize',
+        'escapeRegExp',
+        'replaceAll',
+        'concat',
+      ] as const;
+
+      const SUCCESS = ['identity'] as const;
+
+      describe('#01 => Not inside identity', () => {
+        test.fails.each(FAILS.map(value => [value]))(
+          '#%# => %s does not exist',
+          helper,
+        );
+      });
+
+      describe('#02 => Inside identity', () => {
+        test.each(SUCCESS.map(value => [value]))(
+          '#%# => %s exists',
+          helper,
+        );
+      });
+    });
+
+    describe('#06 => ./extensions/common/is', () => {
+      const helper = async (fn: string) => {
+        return import(`${THIS1}/extensions/common/is`).then(m => {
+          const _fn = m[fn];
+          expect(_fn).toBeDefined();
+          expect(_fn).toBeTypeOf('function');
+          return _fn;
+        });
+      };
+
+      const FAILS = [
+        'identity',
+        'flatten',
+        'voidAction',
+        'tap',
+        'map',
+        'toggleMap',
+        'mapArray',
+        'operation',
+        'add',
+        'times',
+        'division',
+        'modulo',
+        'exponent',
+        'isZero',
+        'isNotZero',
+        'compare',
+        'sign',
+        'toggle',
+        'toNumber',
+        'toUpperCase',
+        'toLowerCase',
+        'trim',
+        'capitalize',
+        'escapeRegExp',
+        'replaceAll',
+        'concat',
+      ] as const;
+
+      const SUCCESS = ['isValue', 'isNotValue'] as const;
+
+      describe('#01 => Not inside is', () => {
+        test.fails.each(FAILS.map(value => [value]))(
+          '#%# => %s does not exist',
+          helper,
+        );
+      });
+
+      describe('#02 => Inside is', () => {
+        test.each(SUCCESS.map(value => [value]))(
+          '#%# => %s exists',
+          helper,
+        );
+      });
+    });
+
+    describe('#07 => ./extensions/common/map', () => {
+      const helper = async (fn: string) => {
+        return import(`${THIS1}/extensions/common/map`).then(m => {
+          const _fn = m[fn];
+          expect(_fn).toBeDefined();
+          expect(_fn).toBeTypeOf('function');
+          return _fn;
+        });
+      };
+
+      const FAILS = [
+        'identity',
+        'isValue',
+        'isNotValue',
+        'voidAction',
+        'tap',
+        'flatten',
+        'mapArray',
+        'operation',
+        'add',
+        'times',
+        'division',
+        'modulo',
+        'exponent',
+        'isZero',
+        'isNotZero',
+        'compare',
+        'sign',
+        'toggle',
+        'toNumber',
+        'toUpperCase',
+        'toLowerCase',
+        'trim',
+        'capitalize',
+        'escapeRegExp',
+        'replaceAll',
+        'concat',
+      ] as const;
+
+      const SUCCESS = ['map', 'toggleMap'] as const;
+
+      describe('#01 => Not inside map', () => {
+        test.fails.each(FAILS.map(value => [value]))(
+          '#%# => %s does not exist',
+          helper,
+        );
+      });
+
+      describe('#02 => Inside map', () => {
+        test.each(SUCCESS.map(value => [value]))(
+          '#%# => %s exists',
+          helper,
+        );
+      });
+    });
+
+    describe('#08 => ./extensions/common/mapArray', () => {
+      const helper = async (fn: string) => {
+        return import(`${THIS1}/extensions/common/mapArray`).then(m => {
+          const _fn = m[fn];
+          expect(_fn).toBeDefined();
+          expect(_fn).toBeTypeOf('function');
+          return _fn;
+        });
+      };
+
+      const FAILS = [
+        'identity',
+        'isValue',
+        'isNotValue',
+        'voidAction',
+        'tap',
+        'flatten',
+        'map',
+        'toggleMap',
+        'operation',
+        'add',
+        'times',
+        'division',
+        'modulo',
+        'exponent',
+        'isZero',
+        'isNotZero',
+        'compare',
+        'sign',
+        'toggle',
+        'toNumber',
+        'toUpperCase',
+        'toLowerCase',
+        'trim',
+        'capitalize',
+        'escapeRegExp',
+        'replaceAll',
+        'concat',
+      ] as const;
+
+      const SUCCESS = ['mapArray'] as const;
+
+      describe('#01 => Not inside mapArray', () => {
+        test.fails.each(FAILS.map(value => [value]))(
+          '#%# => %s does not exist',
+          helper,
+        );
+      });
+
+      describe('#02 => Inside mapArray', () => {
+        test.each(SUCCESS.map(value => [value]))(
+          '#%# => %s exists',
+          helper,
+        );
+      });
+    });
+
+    describe('#09 => ./extensions/common/tap', () => {
+      const helper = async (fn: string) => {
+        return import(`${THIS1}/extensions/common/tap`).then(m => {
+          const _fn = m[fn];
+          expect(_fn).toBeDefined();
+          expect(_fn).toBeTypeOf('function');
+          return _fn;
+        });
+      };
+
+      const FAILS = [
+        'identity',
+        'isValue',
+        'isNotValue',
+        'flatten',
+        'map',
+        'toggleMap',
+        'mapArray',
+        'operation',
+        'add',
+        'times',
+        'division',
+        'modulo',
+        'exponent',
+        'isZero',
+        'isNotZero',
+        'compare',
+        'sign',
+        'toggle',
+        'toNumber',
+        'toUpperCase',
+        'toLowerCase',
+        'trim',
+        'capitalize',
+        'escapeRegExp',
+        'replaceAll',
+        'concat',
+      ] as const;
+
+      const SUCCESS = ['voidAction', 'tap'] as const;
+
+      describe('#01 => Not inside tap', () => {
+        test.fails.each(FAILS.map(value => [value]))(
+          '#%# => %s does not exist',
+          helper,
+        );
+      });
+
+      describe('#02 => Inside tap', () => {
+        test.each(SUCCESS.map(value => [value]))(
+          '#%# => %s exists',
+          helper,
+        );
+      });
+    });
+
+    describe('#10 => ./extensions/booleans', () => {
       const helper = async (fn: string) => {
         return import(`${THIS1}/extensions/booleans`).then(m => {
           const _fn = m[fn];
@@ -320,6 +665,8 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
         'tap',
         'flatten',
         'mapArray',
+        'map',
+        'toggleMap',
         'operation',
         'add',
         'times',
@@ -356,7 +703,7 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
       });
     });
 
-    describe('#05 => ./extensions/numbers/arithmetic', () => {
+    describe('#11 => ./extensions/numbers/arithmetic', () => {
       const helper = async (fn: string) => {
         return import(`${THIS1}/extensions/numbers/arithmetic`).then(m => {
           const _fn = m[fn];
@@ -372,6 +719,8 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
         'isNotValue',
         'voidAction',
         'tap',
+        'map',
+        'toggleMap',
         'flatten',
         'mapArray',
         'isZero',
@@ -411,7 +760,7 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
       });
     });
 
-    describe('#06 => ./extensions/numbers/checkers', () => {
+    describe('#12 => ./extensions/numbers/checkers', () => {
       const helper = async (fn: string) => {
         return import(`${THIS1}/extensions/numbers/checkers`).then(m => {
           const _fn = m[fn];
@@ -429,6 +778,8 @@ describe.skipIf(IS_EXTENSION)('All imports', () => {
         'tap',
         'flatten',
         'mapArray',
+        'map',
+        'toggleMap',
         'operation',
         'add',
         'times',
