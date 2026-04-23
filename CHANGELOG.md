@@ -5,8 +5,24 @@ documentation.
 
 <br/>
 
-Tous les changements notables apportés à ce projet seront documentés dans
-ce fichier.
+All notable changes to this project will be documented in this file.
+
+<br/>
+
+<details>
+<summary>
+
+## **[1.5.1] - 23/04/2026** => _19:35_
+
+</summary>
+
+- Fix: allow `toggleMap` to omit `falsy` and preserve the original value
+  when the condition is false
+- Update: expand `toggleMap` overloads so object form may omit `condition`
+  and only require `truthy`
+- Update: bump `@vitest/coverage-v8`, `@vitest/ui`, and `vitest` to `4.1.5`
+
+</details>
 
 <br/>
 
@@ -91,18 +107,17 @@ ce fichier.
 
 </summary>
 
-- **BREAKING CHANGE**: Renommer le type `Fn1` en `Fn<Args, R>` (paramètres
-  génériques explicites)
-- Add: nouveau fichier `constants.ts` exportant `ASYNC_CONSTRUCTOR_NAME`
-- Add: nouveau fichier `pipe.helpers.ts` exportant `isFnPromise` (détection
-  de fonction async)
-- Add: nouvelles extensions (booleans, strings, numbers/arithmetic,
+- **BREAKING CHANGE**: Rename type `Fn1` to `Fn<Args, R>` (explicit generic
+  parameters)
+- Add: new `constants.ts` file exporting `ASYNC_CONSTRUCTOR_NAME`
+- Add: new `pipe.helpers.ts` file exporting `isFnPromise` (async function
+  detection)
+- Add: new extensions (booleans, strings, numbers/arithmetic,
   numbers/checkers, common)
-- Refactor: utiliser `isFnPromise` dans `pipe.ts` pour la détection async
-- Refactor: réorganiser les fonctions et types
-- Fix: ajouter `beforeAll(() => vi.useFakeTimers())` dans la suite de tests
-  async
-- Update: mise à jour de toutes les dépendances
+- Refactor: use `isFnPromise` in `pipe.ts` for async detection
+- Refactor: reorganize functions and types
+- Fix: add `beforeAll(() => vi.useFakeTimers())` to async test suite
+- Update: update all dependencies
 - <u>Test coverage **_100%_**</u>
 
 </details>
@@ -116,17 +131,16 @@ ce fichier.
 
 </summary>
 
-- Refactor: renommer le type `Fn1` en `Fn<Args, R>` (paramètres génériques
-  explicites) — **breaking change**
-- Add: nouveau fichier `constants.ts` exportant `ASYNC_CONSTRUCTOR_NAME`
-- Add: nouveau fichier `pipe.helpers.ts` exportant `isFnPromise` (détection
-  de fonction async)
-- Refactor: utiliser `isFnPromise` dans `pipe.ts` pour la détection async
-  (remplace la vérification de `constructor.name`)
-- Refactor: déplacer la déstructuration `[fn1, ...rest]` hors des branches
-  if/else dans `pipe.ts`
-- Fix: ajouter `beforeAll(() => vi.useFakeTimers())` dans la suite de tests
-  async
+- Refactor: rename type `Fn1` to `Fn<Args, R>` (explicit generic
+  parameters) — **breaking change**
+- Add: new `constants.ts` file exporting `ASYNC_CONSTRUCTOR_NAME`
+- Add: new `pipe.helpers.ts` file exporting `isFnPromise` (async function
+  detection)
+- Refactor: use `isFnPromise` in `pipe.ts` for async detection (replaces
+  `constructor.name` check)
+- Refactor: move destructuring `[fn1, ...rest]` outside if/else branches in
+  `pipe.ts`
+- Fix: add `beforeAll(() => vi.useFakeTimers())` to async test suite
 - <u>Test coverage **_100%_**</u>
 
 </details>
@@ -140,8 +154,8 @@ ce fichier.
 
 </summary>
 
-- Update: mise à jour des dépendances (feat: Upgrade deps)
-- Fix: ajustements mineurs suite à la mise à jour des dépendances
+- Update: update dependencies (feat: Upgrade deps)
+- Fix: minor adjustments following dependency update
 
 </details>
 
@@ -154,13 +168,13 @@ ce fichier.
 
 </summary>
 
-- Refactor: déplacer `flatten` et `mapArray` vers `fixtures.ts` (usage test
-  uniquement)
-- Update: migrer le bundler de rollup vers rolldown
-- Update: migrer le linter de eslint vers oxlint
-- Update: migrer le formateur de prettier vers oxfmt
-- Update: élever la version minimale de Node.js de >=20 à >=24
-- Update: mettre à jour toutes les dépendances
+- Refactor: move `flatten` and `mapArray` to `fixtures.ts` (test usage
+  only)
+- Update: migrate bundler from rollup to rolldown
+- Update: migrate linter from eslint to oxlint
+- Update: migrate formatter from prettier to oxfmt
+- Update: raise minimum Node.js version from >=20 to >=24
+- Update: update all dependencies
 - <u>Test coverage **_100%_**</u>
 
 </details>
@@ -191,29 +205,28 @@ ce fichier.
 
 ## [0.0.2] - 2025-06-14 -- 12:30
 
-### Ajouts
+### Added
 
-- **feat(core)**: Implémente `pipe` avec support jusqu'à 20 fonctions
-  typées
-- **feat(core)**: Ajoute `pipe.notTyped` pour les chaînes illimitées
-- **feat(types)**: Intègre les types utilitaires essentiels
-- **test(core)**: Fournit une suite de tests complète
-- **docs**: Améliore la documentation avec des exemples détaillés
+- **feat(core)**: Implements `pipe` with support for up to 20 typed
+  functions
+- **feat(core)**: Adds `pipe.notTyped` for unlimited chains
+- **feat(types)**: Integrates essential utility types
+- **test(core)**: Provides comprehensive test suite
+- **docs**: Improves documentation with detailed examples
 
-### Modifications
+### Changed
 
-- **style(types)**: Optimise la structure pour une meilleure inférence
-  TypeScript
+- **style(types)**: Optimizes structure for better TypeScript inference
 
 <br/>
 
-## Licence
+## License
 
 MIT
 
 <br/>
 
-## Auteur
+## Author
 
 chlbri (bri_lvi@icloud.com)
 
@@ -223,6 +236,6 @@ chlbri (bri_lvi@icloud.com)
 
 <br/>
 
-## Liens
+## Links
 
 - [Documentation](https://github.com/chlbri/pipeline)

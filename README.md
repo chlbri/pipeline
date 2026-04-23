@@ -5,22 +5,22 @@ documentation.
 
 <br/>
 
-Une bibliothèque élégante pour composer des fonctions en TypeScript.
-Simplifiez votre code en créant des pipelines de traitement typés,
-performants et entièrement inférés — avec support async natif.
+An elegant library for composing functions in TypeScript. Simplify your
+code by creating typed, performant, and fully inferred processing pipelines
+— with native async support.
 
 <br/>
 
-## Table des matières
+## Table of Contents
 
 1. [Installation](#installation)
-2. [Utilisation rapide](#utilisation-rapide)
-3. [API principale](#api-principale)
+2. [Quick Start](#quick-start)
+3. [Main API](#main-api)
    - [pipe](#pipe)
    - [pipe.notTyped](#pipenottyped)
-4. [Types utilitaires](#types-utilitaires)
-5. [Utilitaires runtime](#utilitaires-runtime)
-6. [Extensions communes](#extensions-communes)
+4. [Utility Types](#utility-types)
+5. [Runtime Utilities](#runtime-utilities)
+6. [Common Extensions](#common-extensions)
    - [identity](#identity)
    - [isValue](#isvalue)
    - [isNotValue](#isnotvalue)
@@ -29,10 +29,10 @@ performants et entièrement inférés — avec support async natif.
    - [mapArray](#maparray)
    - [map](#map)
    - [toggleMap](#togglemap)
-7. [Extensions pour les chaînes](#extensions-pour-les-chaînes)
-8. [Extensions pour les booléens](#extensions-pour-les-booléens)
-9. [Extensions arithmétiques](#extensions-arithmétiques)
-10. [Extensions numériques — vérificateurs](#extensions-numériques--vérificateurs)
+7. [String Extensions](#string-extensions)
+8. [Boolean Extensions](#boolean-extensions)
+9. [Arithmetic Extensions](#arithmetic-extensions)
+10. [Numeric Extensions — Checkers](#numeric-extensions--checkers)
 11. [CHANGELOG](#changelog)
 
 <br/>
@@ -59,7 +59,7 @@ bun addBy @bemedev/pipe
 
 <br/>
 
-## Utilisation rapide
+## Quick Start
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -82,7 +82,7 @@ processData(2); // 2.25  ← ((((2+1)*2)-3)/2)²
 
 <br/>
 
-## API principale
+## Main API
 
 ### `pipe`
 
@@ -90,15 +90,15 @@ processData(2); // 2.25  ← ((((2+1)*2)-3)/2)²
 import { pipe } from '@bemedev/pipe';
 ```
 
-Crée un pipeline de fonctions où chaque fonction reçoit le résultat de la
-précédente. Le typage est entièrement inféré, jusqu'à **100 fonctions**.
+Creates a pipeline of functions where each function receives the result of
+the previous one. Typing is fully inferred, up to **100 functions**.
 
-- Seule la **première** fonction peut recevoir plusieurs arguments.
-- Les fonctions suivantes reçoivent exactement **un** argument.
-- Si au moins une fonction est `async`, toute la pipeline devient
-  **asynchrone** et retourne une `Promise`.
+- Only the **first** function can receive multiple arguments.
+- Following functions receive exactly **one** argument.
+- If at least one function is `async`, the entire pipeline becomes
+  **asynchronous** and returns a `Promise`.
 
-#### Pipeline synchrone
+#### Synchronous Pipeline
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -113,7 +113,7 @@ const formatTitle = pipe(
 formatTitle('  hello world  '); // '📌 Hello World'
 ```
 
-#### Pipeline multi-arguments (premier pas uniquement)
+#### Multi-Argument Pipeline (first step only)
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -126,11 +126,11 @@ const hypotenuse = pipe(
 hypotenuse(3, 4); // 5
 ```
 
-#### Pipeline asynchrone
+#### Asynchronous Pipeline
 
-Dès qu'une fonction `async` est présente, le résultat final est une
-`Promise`. Les fonctions synchrones suivantes reçoivent automatiquement la
-valeur résolue (`Awaited`).
+As soon as an `async` function is present, the final result is a `Promise`.
+Following synchronous functions automatically receive the resolved value
+(`Awaited`).
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -144,7 +144,7 @@ const result = await fetchUser(1);
 // { id: 1, name: 'Alice', greeting: 'Hello, Alice!' }
 ```
 
-#### Pipeline objet
+#### Object Pipeline
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -167,14 +167,14 @@ enrichUser({ name: 'Bob', age: 25 });
 import { pipe } from '@bemedev/pipe';
 ```
 
-Version non typée de `pipe`. Permet de chaîner un nombre **illimité** de
-fonctions sans contrainte de typage générique. Utile lorsque le nombre de
-fonctions dépasse 100 ou dans des cas dynamiques.
+Untyped version of `pipe`. Allows chaining an **unlimited** number of
+functions without generic typing constraints. Useful when the number of
+functions exceeds 100 or in dynamic cases.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
 
-// Chaîne de 100 incrémentations
+// Chain of 100 increments
 const increment100 = pipe.notTyped(
   ...Array.from({ length: 100 }, () => (x: number) => x + 1),
 );
@@ -185,7 +185,7 @@ increment100(0); // 100
 ```typescript
 import { pipe } from '@bemedev/pipe';
 
-// Construction dynamique d'un pipeline
+// Dynamic pipeline construction
 const steps: Array<(x: string) => string> = [
   s => s.trim(),
   s => s.toUpperCase(),
@@ -198,19 +198,19 @@ format('  hello '); // '[HELLO]'
 
 <br/>
 
-## Types utilitaires
+## Utility Types
 
-Exportés depuis `@bemedev/pipe`.
+Exported from `@bemedev/pipe`.
 
 ### `Fn<Args, R>`
 
-Type de base pour n'importe quelle fonction.
+Base type for any function.
 
 ```typescript
 import type { Fn } from '@bemedev/pipe';
 
 type Double = Fn<[number], number>;
-// équivalent à : (x: number) => number
+// equivalent to: (x: number) => number
 
 const double: Double = x => x * 2;
 const result = pipe(double)(5); // 10
@@ -220,8 +220,8 @@ const result = pipe(double)(5); // 10
 
 ### `NextFn<T>`
 
-Type d'une fonction qui prend en argument le **type de retour résolu**
-(`Awaited<ReturnType<T>>`) d'une autre fonction.
+Type of a function that takes as argument the **resolved return type**
+(`Awaited<ReturnType<T>>`) of another function.
 
 ```typescript
 import type { Fn, NextFn } from '@bemedev/pipe';
@@ -234,8 +234,7 @@ type Step2 = NextFn<Step1>; // (arg: string) => any
 
 ### `TupleOfLength<T, N>`
 
-Construit un tuple de longueur exacte `N` dont chaque élément est de type
-`T`.
+Constructs a tuple of exact length `N` where each element is of type `T`.
 
 ```typescript
 import type { TupleOfLength } from '@bemedev/pipe';
@@ -247,8 +246,8 @@ type Three = TupleOfLength<number, 3>; // [number, number, number]
 
 ### `MaybePromise<T>`
 
-Retourne `Promise<Last>` si au moins un élément du tuple `T` est une
-`Promise`, sinon retourne `Last` directement.
+Returns `Promise<Last>` if at least one element of tuple `T` is a
+`Promise`, otherwise returns `Last` directly.
 
 ```typescript
 import type { MaybePromise } from '@bemedev/pipe';
@@ -261,8 +260,8 @@ type Async = MaybePromise<[Promise<number>, string]>; // Promise<string>
 
 ### `MaybePromiseFn<Args, R>`
 
-Type d'une fonction pipeline résultante : synchrone ou asynchrone selon le
-contenu de `R`.
+Type of a resulting pipeline function: synchronous or asynchronous based on
+the content of `R`.
 
 ```typescript
 import type { MaybePromiseFn } from '@bemedev/pipe';
@@ -276,9 +275,9 @@ type AsyncPipe = MaybePromiseFn<[number], [Promise<number>, string]>;
 
 <br/>
 
-## Utilitaires runtime
+## Runtime Utilities
 
-Exportés depuis `@bemedev/pipe`.
+Exported from `@bemedev/pipe`.
 
 ### `isFnPromise`
 
@@ -286,9 +285,9 @@ Exportés depuis `@bemedev/pipe`.
 isFnPromise(value?: unknown): value is Fn<any[], Promise<any>>
 ```
 
-Prédicat retournant `true` si `value` est une **fonction asynchrone** (dont
-le `constructor.name` est `"AsyncFunction"`). Utilisé en interne par `pipe`
-pour décider d'une exécution sync ou async.
+Predicate returning `true` if `value` is an **async function** (whose
+`constructor.name` is `"AsyncFunction"`). Used internally by `pipe` to
+decide between sync or async execution.
 
 ```typescript
 import { pipe, isFnPromise } from '@bemedev/pipe';
@@ -307,8 +306,8 @@ checkAsync(() => 42); // false
 const ASYNC_CONSTRUCTOR_NAME = 'AsyncFunction';
 ```
 
-Constante utilisée par `isFnPromise` pour identifier les fonctions async.
-Exportée pour permettre des contrôles personnalisés cohérents.
+Constant used by `isFnPromise` to identify async functions. Exported to
+allow consistent custom checks.
 
 ```typescript
 import { pipe, ASYNC_CONSTRUCTOR_NAME } from '@bemedev/pipe';
@@ -324,11 +323,11 @@ getConstructorName(() => {}); // 'Function'
 
 <br/>
 
-## Extensions communes
+## Common Extensions
 
 ```typescript
 import { ... } from '@bemedev/pipe/extensions/common';
-// ou via le barrel :
+// or via the barrel:
 import { ... } from '@bemedev/pipe/extensions';
 ```
 
@@ -340,8 +339,8 @@ import { ... } from '@bemedev/pipe/extensions';
 identity<T>(value: T): T
 ```
 
-Retourne la valeur reçue sans la modifier. Utile comme étape neutre,
-marqueur de type ou valeur par défaut dans un pipeline.
+Returns the received value unchanged. Useful as a neutral step, type
+marker, or default value in a pipeline.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -361,9 +360,9 @@ safeNumber(null); // 0
 isValue<T>(toCompare: T): (...values: T[]) => boolean
 ```
 
-Retourne un prédicat variadic qui vérifie si **au moins une** des valeurs
-passées est strictement égale à `toCompare`. Dans un pipeline, reçoit une
-seule valeur depuis l'étape précédente.
+Returns a variadic predicate that checks if **at least one** of the passed
+values is strictly equal to `toCompare`. In a pipeline, receives a single
+value from the previous step.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -382,7 +381,7 @@ isAdmin({ role: 'user' }); // false
 import { pipe } from '@bemedev/pipe';
 import { isValue } from '@bemedev/pipe/extensions/common';
 
-// Utilisé avec des valeurs numériques
+// Used with numeric values
 const isZeroCustom = pipe((x: number) => x, isValue(0));
 
 isZeroCustom(0); // true
@@ -397,8 +396,8 @@ isZeroCustom(42); // false
 isNotValue<T>(toCompare: T): (...values: T[]) => boolean
 ```
 
-Retourne un prédicat variadic qui vérifie si **toutes** les valeurs passées
-sont strictement différentes de `toCompare`. Inverse de `isValue`.
+Returns a variadic predicate that checks if **all** passed values are
+strictly different from `toCompare`. Opposite of `isValue`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -432,9 +431,9 @@ voidAction<S>(fn: (value: S) => void): (value: S) => S
 tap<S>(fn: (value: S) => void): (value: S) => S
 ```
 
-Exécute `fn` en tant qu'**effet de bord** (logging, mutation externe,
-débogage…) et propage la valeur originale **sans la modifier**. `tap` est
-un alias strict de `voidAction`.
+Executes `fn` as a **side effect** (logging, external mutation, debugging…)
+and propagates the original value **unchanged**. `tap` is a strict alias of
+`voidAction`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -457,10 +456,10 @@ processOrder({ id: 42, total: 100 });
 import { pipe } from '@bemedev/pipe';
 import { voidAction } from '@bemedev/pipe/extensions/common';
 
-// Persistance en base de données (effet de bord)
+// Database persistence (side effect)
 const saveAndReturn = pipe(
   (user: { name: string }) => user,
-  voidAction(user => db.save(user)), // retourne toujours user
+  voidAction(user => db.save(user)), // always returns user
   user => ({ ...user, saved: true }),
 );
 ```
@@ -494,7 +493,7 @@ normalise({ address: { city: 'Paris', zip: '75001' }, name: 'Alice' });
 import { pipe } from '@bemedev/pipe';
 import { flatten } from '@bemedev/pipe/extensions/common';
 
-// Utile pour comparer ou sérialiser des structures profondes
+// Useful for comparing or serializing deep structures
 const deepEqual = pipe(
   (pair: [object, object]) => pair,
   ([a, b]) => [flatten(a), flatten(b)] as const,
@@ -510,22 +509,22 @@ deepEqual([{ a: { b: 1 } }, { a: { b: 2 } }]); // false
 ### `mapArray`
 
 ```typescript
-// Signature à 1 clé  → retourne la valeur directement
+// Signature with 1 key → returns value directly
 mapArray<K>(key: K): (obj: Record<K, T>) => T
 
-// Signature à N clés → retourne un tuple
+// Signature with N keys → returns tuple
 mapArray<K1, K2, ...Ks>(k1, k2, ...ks): (obj) => [T1, T2, ...]
 ```
 
-Extrait une ou plusieurs propriétés d'un objet. Avec **une seule clé**,
-retourne la valeur directement. Avec **plusieurs clés**, retourne un tuple
-dans le même ordre.
+Extracts one or more properties from an object. With **a single key**,
+returns the value directly. With **multiple keys**, returns a tuple in the
+same order.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
 import { mapArray } from '@bemedev/pipe/extensions/common';
 
-// Extraction d'une seule propriété
+// Extract a single property
 const getName = pipe(
   (user: { name: string; age: number; role: string }) => user,
   mapArray('name'),
@@ -538,7 +537,7 @@ getName({ name: 'Alice', age: 30, role: 'admin' }); // 'Alice'
 import { pipe } from '@bemedev/pipe';
 import { mapArray } from '@bemedev/pipe/extensions/common';
 
-// Extraction de plusieurs propriétés → tuple typé
+// Extract multiple properties → typed tuple
 const getCredentials = pipe(
   (user: { name: string; age: number; token: string }) => user,
   mapArray('name', 'token'),
@@ -552,7 +551,7 @@ getCredentials({ name: 'Bob', age: 25, token: 'abc123' });
 import { pipe } from '@bemedev/pipe';
 import { mapArray } from '@bemedev/pipe/extensions/common';
 
-// Chaînage après flatten
+// Chaining after flatten
 const getCityAndZip = pipe(
   (user: { address: { city: string; zip: string } }) => user.address,
   mapArray('city', 'zip'),
@@ -572,21 +571,20 @@ map<T>(
 ): (value: T) => T
 ```
 
-Applique la **première branche dont la condition est vérifiée** et retourne
-sa transformation. Si aucune branche ne correspond, la valeur est retournée
-inchangée. Permet d'implémenter un pattern-matching expressif à l'intérieur
-d'un pipeline.
+Applies the **first branch whose condition is met** and returns its
+transformation. If no branch matches, the value is returned unchanged.
+Enables expressive pattern-matching inside a pipeline.
 
-Chaque branche est un objet `{ cond, fn }` :
+Each branch is an object `{ cond, fn }` :
 
-- `cond: (value: T) => boolean` — condition de déclenchement
+- `cond: (value: T) => boolean` — trigger condition
 - `fn: (value: subtype) => T` — transformation
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
 import { map } from '@bemedev/pipe/extensions/common';
 
-// Clamper une valeur entre 0 et 100
+// Clamp a value between 0 and 100
 const clamp = pipe(
   (x: number) => x,
   map(branch => [
@@ -604,7 +602,7 @@ clamp(120); // 100
 import { pipe } from '@bemedev/pipe';
 import { map } from '@bemedev/pipe/extensions/common';
 
-// Normalisation d'un statut HTTP en libellé
+// Normalize HTTP status to label
 const statusLabel = pipe(
   (code: number) => code,
   map(branch => [
@@ -618,14 +616,14 @@ const statusLabel = pipe(
 statusLabel(200); // 'Succès'
 statusLabel(404); // 'Erreur client'
 statusLabel(503); // 'Erreur serveur'
-statusLabel(100); // 100  ← aucune branche → valeur inchangée
+statusLabel(100); // 100  ← no branch matched → value unchanged
 ```
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
 import { map } from '@bemedev/pipe/extensions/common';
 
-// Discrimination de type dans un pipeline union
+// Type discrimination in a union pipeline
 const describe = pipe(
   (x: number | string | boolean) => x,
   map(branch => [
@@ -654,29 +652,30 @@ describe(true); // 'booléen: true'
 ### `toggleMap`
 
 ```typescript
-// Forme positionnelle
+// Positional form
 toggleMap<T>(
   condition: (value: T) => boolean,
   truthy: (value: T) => T,
-  falsy:  (value: T) => T,
+  falsy?:  (value: T) => T,
 ): (value: T) => T
 
-// Forme objet
+// Object form
 toggleMap<T>({
-  condition: (value: T) => boolean,
+  condition?: (value: T) => boolean,
   truthy: (value: T) => T,
-  falsy:  (value: T) => T,
+  falsy?:  (value: T) => T,
 }): (value: T) => T
 ```
 
-Applique `truthy` si la condition est vérifiée, `falsy` sinon. Version
-simplifiée de `map` pour les cas binaires. Supporte deux syntaxes.
+Applies `truthy` if condition is met, `falsy` otherwise. If `falsy` is
+omitted, the input value is returned as-is. In object form, `condition` is
+also optional: if absent, `truthy` is always applied.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
 import { toggleMap } from '@bemedev/pipe/extensions/common';
 
-// Valeur absolue (forme positionnelle)
+// Absolute value (positional form)
 const abs = pipe(
   (x: number) => x,
   toggleMap(
@@ -694,7 +693,7 @@ abs(3); // 3
 import { pipe } from '@bemedev/pipe';
 import { toggleMap } from '@bemedev/pipe/extensions/common';
 
-// Normalisation d'une note (forme objet)
+// Normalize a score (object form)
 const normaliseScore = pipe(
   (score: number) => score,
   toggleMap({
@@ -710,11 +709,11 @@ normaliseScore(17); // 17
 
 <br/>
 
-## Extensions pour les chaînes
+## String Extensions
 
 ```typescript
 import { ... } from '@bemedev/pipe/extensions/strings';
-// ou via le barrel :
+// or via the barrel:
 import { ... } from '@bemedev/pipe/extensions';
 ```
 
@@ -726,7 +725,7 @@ import { ... } from '@bemedev/pipe/extensions';
 toUpperCase(value: string): string
 ```
 
-Convertit une chaîne en majuscules (locale).
+Converts a string to uppercase (locale).
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -744,7 +743,7 @@ shout('  bonjour '); // 'BONJOUR'
 toLowerCase(value: string): string
 ```
 
-Convertit une chaîne en minuscules (locale).
+Converts a string to lowercase (locale).
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -762,7 +761,7 @@ normalise('  HELLO '); // 'hello'
 trim(value: string): string
 ```
 
-Supprime les espaces en début et en fin de chaîne.
+Removes leading and trailing whitespace from a string.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -780,8 +779,7 @@ clean('   alice in wonderland  '); // 'Alice in wonderland'
 capitalize(value: string): string
 ```
 
-Met en majuscule le **premier caractère** uniquement (locale), laisse le
-reste intact.
+Capitalizes the **first character** only (locale), leaves the rest intact.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -816,7 +814,7 @@ const toSafePattern = pipe(
   escaped => new RegExp(escaped, 'g'),
 );
 
-toSafePattern('1+1=2'); // /1\+1=2/g — caractère + correctement échappé
+toSafePattern('1+1=2'); // /1\+1=2/g — + character properly escaped
 ```
 
 ---
@@ -827,9 +825,8 @@ toSafePattern('1+1=2'); // /1\+1=2/g — caractère + correctement échappé
 replaceAll(...toRemove: string[]): (value: string) => string
 ```
 
-Supprime toutes les occurrences de chaque chaîne listée dans la valeur
-d'entrée. Chaque occurrence est cherchée avec un `RegExp` global dérivé
-d'`escapeRegExp`.
+Removes all occurrences of each listed string from the input value. Each
+occurrence is searched with a global `RegExp` derived from `escapeRegExp`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -852,7 +849,7 @@ import {
   replaceAll,
 } from '@bemedev/pipe/extensions/strings';
 
-// Nettoyage d'un slug
+// Slug cleanup
 const toSlug = pipe(
   trim,
   toLowerCase,
@@ -870,7 +867,7 @@ toSlug('  Hello, World!  '); // 'hello'
 concat(...strings: string[]): (value: string) => string
 ```
 
-Concatène les chaînes fournies **après** la valeur d'entrée.
+Concatenates the provided strings **after** the input value.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -889,7 +886,7 @@ greet('  alice '); // 'Alice, bienvenue !'
 import { pipe } from '@bemedev/pipe';
 import { toUpperCase, concat } from '@bemedev/pipe/extensions/strings';
 
-// Ajout d'extension de fichier
+// Add file extension
 const toFilename = pipe(toUpperCase, concat('.md'));
 
 toFilename('readme'); // 'README.md'
@@ -897,11 +894,11 @@ toFilename('readme'); // 'README.md'
 
 <br/>
 
-## Extensions pour les booléens
+## Boolean Extensions
 
 ```typescript
 import { ... } from '@bemedev/pipe/extensions/booleans';
-// ou via le barrel :
+// or via the barrel:
 import { ... } from '@bemedev/pipe/extensions';
 ```
 
@@ -913,7 +910,7 @@ import { ... } from '@bemedev/pipe/extensions';
 toggle(value: boolean): boolean
 ```
 
-Inverse un booléen (`true` → `false`, `false` → `true`).
+Inverts a boolean (`true` → `false`, `false` → `true`).
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -929,7 +926,7 @@ invert(false); // true
 import { pipe } from '@bemedev/pipe';
 import { toggle } from '@bemedev/pipe/extensions/booleans';
 
-// Double inversion = identité
+// Double inversion = identity
 const noOp = pipe(toggle, toggle);
 noOp(true); // true
 noOp(false); // false
@@ -943,7 +940,7 @@ noOp(false); // false
 toNumber(value: boolean): number
 ```
 
-Convertit un booléen en nombre (`true` → `1`, `false` → `0`).
+Converts a boolean to a number (`true` → `1`, `false` → `0`).
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -959,7 +956,7 @@ boolToScore(false); // 0
 import { pipe } from '@bemedev/pipe';
 import { toggle, toNumber } from '@bemedev/pipe/extensions/booleans';
 
-// Inverser puis convertir
+// Invert then convert
 const invertedScore = pipe(toggle, toNumber);
 invertedScore(true); // 0
 invertedScore(false); // 1
@@ -967,16 +964,16 @@ invertedScore(false); // 1
 
 <br/>
 
-## Extensions arithmétiques
+## Arithmetic Extensions
 
 ```typescript
 import { ... } from '@bemedev/pipe/extensions/numbers/arithmetic';
-// ou via le barrel :
+// or via the barrel:
 import { ... } from '@bemedev/pipe/extensions';
 ```
 
-Toutes les opérations suivent la convention **`operation(toApply)(value)`**
-= `fn(value, toApply)`. Ainsi `addBy(10)(5)` = `5 + 10 = 15`.
+All operations follow the convention **`operation(toApply)(value)`** =
+`fn(value, toApply)`. So `addBy(10)(5)` = `5 + 10 = 15`.
 
 ---
 
@@ -986,9 +983,9 @@ Toutes les opérations suivent la convention **`operation(toApply)(value)`**
 operation(fn: (a: number, b: number) => number): (toApply: number) => (value: number) => number
 ```
 
-Fabrique d'opérations arithmétiques curryfiées. Utilisée pour créer
-`addBy`, `timesBy`, `divisionBy`, `moduloBy` et `exponentBy`. Permet de
-définir toute opération binaire personnalisée.
+Factory for curried arithmetic operations. Used to create `addBy`,
+`timesBy`, `divisionBy`, `moduloBy`, and `exponentBy`. Allows defining any
+custom binary operation.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1010,7 +1007,7 @@ sqrt(16); // 4
 addBy(n: number): (value: number) => number
 ```
 
-Additionne `n` à la valeur.
+Adds `n` to the value.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1029,7 +1026,7 @@ addTax(100); // 120
 timesBy(n: number): (value: number) => number
 ```
 
-Multiplie la valeur par `n`.
+Multiplies the value by `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1048,7 +1045,7 @@ double(7); // 14
 divisionBy(n: number): (value: number) => number
 ```
 
-Divise la valeur par `n`.
+Divides the value by `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1067,7 +1064,7 @@ half(42); // 21
 moduloBy(n: number): (value: number) => number
 ```
 
-Retourne le reste de la divisionBy de la valeur par `n`.
+Returns the remainder of dividing the value by `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1087,7 +1084,7 @@ remainder(9); // 0
 exponentBy(n: number): (value: number) => number
 ```
 
-Élève la valeur à la puissance `n`.
+Raises the value to the power `n`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1099,7 +1096,7 @@ square(5); // 25
 square(3); // 9
 ```
 
-#### Exemple combiné : formule arithmétique complète
+#### Combined Example: Complete Arithmetic Formula
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1125,11 +1122,11 @@ formula(5); // (((5+10)×3)÷5)%7)² = (9%7)² = 4
 
 <br/>
 
-## Extensions numériques — vérificateurs
+## Numeric Extensions — Checkers
 
 ```typescript
 import { ... } from '@bemedev/pipe/extensions/numbers/checkers';
-// ou via le barrel :
+// or via the barrel:
 import { ... } from '@bemedev/pipe/extensions';
 ```
 
@@ -1141,7 +1138,7 @@ import { ... } from '@bemedev/pipe/extensions';
 isZero(...values: number[]): boolean
 ```
 
-Retourne `true` si la valeur est strictement égale à `0`. Équivalent à
+Returns `true` if the value is strictly equal to `0`. Equivalent to
 `isValue(0)`.
 
 ```typescript
@@ -1150,7 +1147,7 @@ import { isZero } from '@bemedev/pipe/extensions/numbers/checkers';
 
 const checkDenominator = pipe((n: number) => n, isZero);
 
-checkDenominator(0); // true  ← divisionBy impossible
+checkDenominator(0); // true  ← division impossible
 checkDenominator(5); // false
 ```
 
@@ -1162,8 +1159,8 @@ checkDenominator(5); // false
 isNotZero(...values: number[]): boolean
 ```
 
-Retourne `true` si la valeur est strictement différente de `0`. Équivalent
-à `isNotValue(0)`.
+Returns `true` if the value is strictly different from `0`. Equivalent to
+`isNotValue(0)`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1172,8 +1169,8 @@ import { divisionBy } from '@bemedev/pipe/extensions/numbers/arithmetic';
 
 const safeDivide = pipe((n: number) => n, isNotZero);
 
-safeDivide(5); // true  ← peut diviser
-safeDivide(0); // false ← divisionBy par zéro
+safeDivide(5); // true  ← can divide
+safeDivide(0); // false ← division by zero
 ```
 
 ---
@@ -1184,11 +1181,11 @@ safeDivide(0); // false ← divisionBy par zéro
 compare(toCompare: number): (value: number) => -1 | 0 | 1
 ```
 
-Compare la valeur à `toCompare` et retourne :
+Compares the value to `toCompare` and returns:
 
-- `0` si égaux
-- `1` si `value > toCompare`
-- `-1` si `value < toCompare`
+- `0` if equal
+- `1` if `value > toCompare`
+- `-1` if `value < toCompare`
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1197,7 +1194,7 @@ import { compare } from '@bemedev/pipe/extensions/numbers/checkers';
 const compareToTen = pipe((x: number) => x, compare(10));
 
 compareToTen(5); // -1  ← 5 < 10
-compareToTen(10); //  0  ← égal
+compareToTen(10); //  0  ← equal
 compareToTen(15); //  1  ← 15 > 10
 ```
 
@@ -1205,7 +1202,7 @@ compareToTen(15); //  1  ← 15 > 10
 import { pipe } from '@bemedev/pipe';
 import { compare } from '@bemedev/pipe/extensions/numbers/checkers';
 
-// Tri d'un tableau avec compare
+// Sort an array with compare
 const sortAsc = (arr: number[]) =>
   [...arr].sort((a, b) => pipe((x: number) => x, compare(b))(a));
 
@@ -1220,8 +1217,8 @@ sortAsc([3, 1, 4, 1, 5]); // [1, 1, 3, 4, 5]
 sign(value: number): -1 | 0 | 1
 ```
 
-Retourne le signe de la valeur : `1` (positif), `-1` (négatif), `0` (zéro).
-Équivalent à `compare(0)`.
+Returns the sign of the value: `1` (positive), `-1` (negative), `0` (zero).
+Equivalent to `compare(0)`.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
@@ -1239,7 +1236,7 @@ import { pipe } from '@bemedev/pipe';
 import { sign } from '@bemedev/pipe/extensions/numbers/checkers';
 import { map } from '@bemedev/pipe/extensions/common';
 
-// Convertir le signe en libellé
+// Convert sign to label
 const signLabel = pipe(
   (x: number) => x,
   sign,
@@ -1250,9 +1247,9 @@ const signLabel = pipe(
   ]),
 );
 
-signLabel(-5); // 'négatif'
-signLabel(0); // 'zéro'
-signLabel(8); // 'positif'
+signLabel(-5); // 'negative'
+signLabel(0); // 'zero'
+signLabel(8); // 'positive'
 ```
 
 <br/>
@@ -1268,13 +1265,13 @@ signLabel(8); // 'positif'
 
 <br/>
 
-## Licence
+## License
 
 MIT
 
 <br/>
 
-## Auteur
+## Author
 
 chlbri (bri_lvi@icloud.com)
 
@@ -1284,6 +1281,6 @@ chlbri (bri_lvi@icloud.com)
 
 <br/>
 
-## Liens
+## Links
 
 - [Documentation](https://github.com/chlbri/pipeline)

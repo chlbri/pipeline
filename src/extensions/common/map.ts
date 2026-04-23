@@ -29,43 +29,56 @@ export const map = <T>(helper: Branch3<T>) => {
 };
 
 export type _ToggleMap_F = <T>(params: {
-  condition: Fn<[T], boolean>;
+  condition?: Fn<[T], boolean>;
   truthy: Fn<[T], T>;
-  falsy: Fn<[T], T>;
+  falsy?: Fn<[T], T>;
 }) => Fn<[T], T>;
+
+type ConditionObject<T> =
+  | {
+      truthy: Fn<[T], T>;
+      falsy?: never;
+      condition?: never;
+    }
+  | {
+      condition: Fn<[T], boolean>;
+      truthy: Fn<[T], T>;
+      falsy?: Fn<[T], T>;
+    };
+
+type Condition<T> = ConditionObject<T> | Fn<[T], boolean>;
 
 const _toggleMap: _ToggleMap_F = ({ condition, truthy, falsy }) => {
   return value => {
+    if (!condition) return truthy(value);
     if (condition(value)) return truthy(value);
-    return falsy(value);
+    return falsy ? falsy(value) : value;
   };
 };
 
-export function toggleMap<T>(params: {
-  condition: Fn<[T], boolean>;
-  truthy: Fn<[T], T>;
-  falsy: Fn<[T], T>;
-}): Fn<[T], T>;
+export function toggleMap<T>(params: ConditionObject<T>): Fn<[T], T>;
 export function toggleMap<T>(
   condition: Fn<[T], boolean>,
   truthy: Fn<[T], T>,
-  falsy: Fn<[T], T>,
+  falsy?: Fn<[T], T>,
 ): Fn<[T], T>;
 
 export function toggleMap<T>(
-  _condition: any,
+  _condition: Condition<T>,
   _truthy?: Fn<[T], T>,
   _falsy?: Fn<[T], T>,
 ) {
-  const check1 = typeof _condition === 'function';
+  const __condition = _condition;
+  const check1 = typeof __condition === 'function';
+
   if (check1) {
     return _toggleMap({
-      condition: _condition,
+      condition: __condition,
       truthy: _truthy!,
-      falsy: _falsy!,
+      falsy: _falsy,
     });
   }
-  const { condition, truthy, falsy } = _condition;
+  const { condition, truthy, falsy } = __condition;
   return _toggleMap({
     condition,
     truthy,
