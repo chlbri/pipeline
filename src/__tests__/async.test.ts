@@ -13,10 +13,10 @@ import {
   times,
   toUpperCase,
   voidAction,
-} from './extensions';
+} from '../extensions';
 
-import { pipe } from './pipe';
-import type { TupleOfLength } from './types';
+import { pipe } from '../pipe';
+import type { TupleOfLength } from '../types';
 
 // Async versions of arithmetic functions
 const addAsync = (n: number) => async (x: number) =>

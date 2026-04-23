@@ -1,22 +1,8 @@
-import {
-  THIS1,
-  addTarball,
-  cleanup,
-} from '@bemedev/dev-utils/build-tests';
+import { THIS1 } from '@bemedev/dev-utils/build-tests';
 import { createTests } from '@bemedev/dev-utils/vitest-extended';
-import { add, division, exponent, times } from './extensions';
-import { $ } from 'zx';
-
-export const IS_EXTENSION = process.env.VITEST_VSCODE === 'true';
+import { add, division, exponent, times } from '../extensions';
 
 describe('All imports', () => {
-  beforeAll(async () => {
-    vi.useFakeTimers();
-    await $`pnpm run build`;
-    return addTarball();
-  });
-  afterAll(cleanup);
-
   describe('#01 => pipe exists at paths', () => {
     const { acceptation, success } = createTests.withImplementation(
       undefined as any,
@@ -180,6 +166,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -225,6 +212,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -275,6 +263,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -333,6 +322,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -390,6 +380,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -446,6 +437,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -502,6 +494,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -559,6 +552,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'isZero',
         'isNotZero',
         'compare',
@@ -591,7 +585,66 @@ describe('All imports', () => {
       });
     });
 
-    describe('#09 => ./extensions/common/tap', () => {
+    describe('#09 => ./extensions/common/paramArray', () => {
+      const helper = async (fn: string) => {
+        return import(`${THIS1}/extensions/common/paramArray`).then(m => {
+          const _fn = m[fn];
+          expect(_fn).toBeDefined();
+          expect(_fn).toBeTypeOf('function');
+          return _fn;
+        });
+      };
+
+      const FAILS = [
+        'identity',
+        'isValue',
+        'isNotValue',
+        'voidAction',
+        'tap',
+        'flatten',
+        'map',
+        'toggleMap',
+        'mapArray',
+        'operation',
+        'add',
+        'times',
+        'division',
+        'modulo',
+        'exponent',
+        'multiply',
+        'isZero',
+        'isNotZero',
+        'compare',
+        'sign',
+        'toggle',
+        'toNumber',
+        'toUpperCase',
+        'toLowerCase',
+        'trim',
+        'capitalize',
+        'escapeRegExp',
+        'replaceAll',
+        'concat',
+      ] as const;
+
+      const SUCCESS = ['paramArray'] as const;
+
+      describe('#01 => Not inside paramArray', () => {
+        test.fails.each(FAILS.map(value => [value]))(
+          '#%# => %s does not exist',
+          helper,
+        );
+      });
+
+      describe('#02 => Inside paramArray', () => {
+        test.each(SUCCESS.map(value => [value]))(
+          '#%# => %s exists',
+          helper,
+        );
+      });
+    });
+
+    describe('#10 => ./extensions/common/tap', () => {
       const helper = async (fn: string) => {
         return import(`${THIS1}/extensions/common/tap`).then(m => {
           const _fn = m[fn];
@@ -647,7 +700,7 @@ describe('All imports', () => {
       });
     });
 
-    describe('#10 => ./extensions/booleans', () => {
+    describe('#11 => ./extensions/booleans', () => {
       const helper = async (fn: string) => {
         return import(`${THIS1}/extensions/booleans`).then(m => {
           const _fn = m[fn];
@@ -703,7 +756,7 @@ describe('All imports', () => {
       });
     });
 
-    describe('#11 => ./extensions/numbers/arithmetic', () => {
+    describe('#12 => ./extensions/numbers/arithmetic', () => {
       const helper = async (fn: string) => {
         return import(`${THIS1}/extensions/numbers/arithmetic`).then(m => {
           const _fn = m[fn];
@@ -743,6 +796,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
       ] as const;
 
       describe('#01 => Not inside arithmetic', () => {
@@ -760,7 +814,7 @@ describe('All imports', () => {
       });
     });
 
-    describe('#12 => ./extensions/numbers/checkers', () => {
+    describe('#13 => ./extensions/numbers/checkers', () => {
       const helper = async (fn: string) => {
         return import(`${THIS1}/extensions/numbers/checkers`).then(m => {
           const _fn = m[fn];
@@ -786,6 +840,7 @@ describe('All imports', () => {
         'division',
         'modulo',
         'exponent',
+        'multiply',
         'toUpperCase',
         'toLowerCase',
         'trim',

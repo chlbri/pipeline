@@ -4,3 +4,4 @@ export * from './is';
 export * from './map';
 export * from './mapArray';
 export * from './tap';
+export * from './paramArray';

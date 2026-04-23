@@ -18,11 +18,8 @@ export const operation = (fn: FnN) => {
 };
 
 export const add = operation((a, b) => a + b);
-
 export const times = operation((a, b) => a * b);
-
 export const division = operation((a, b) => a / b);
-
+export const multiply = operation((a, b) => a * b);
 export const modulo = operation((a, b) => a % b);
-
 export const exponent = operation((a, b) => a ** b);
