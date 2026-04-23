@@ -7,7 +7,9 @@ import { createTests } from '@bemedev/dev-utils/vitest-extended';
 import { add, division, exponent, times } from './extensions';
 import { $ } from 'zx';
 
-describe('All imports', () => {
+const IS_EXTENSION = process.env.VITEST_VSCODE === 'true';
+
+describe.skipIf(IS_EXTENSION)('All imports', () => {
   beforeAll(async () => {
     vi.useFakeTimers();
     await $`pnpm run build`;

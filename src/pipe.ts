@@ -20,6 +20,29 @@ import type { Fn, MaybePromiseFn } from './types';
  * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
  * @remarks we can type up to 100 functions
  */
+export function pipe<F0 extends any[], F1>(
+  f1: Fn<F0, F1>,
+): MaybePromiseFn<F0, [F1]>;
+
+/**
+ * Creates a function pipeline that applies a series of functions in sequence.
+ * @returns A function that takes an argument and applies a series of functions to it in sequence.
+ * Each function in the series takes the output of the previous function as its input.
+ * The final function's return value is the output of the entire pipeline.
+ * @remarks Typings accepts functions until 100
+ * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
+ * @remarks we can type up to 100 functions
+ */
+
+/**
+ * Creates a function pipeline that applies a series of functions in sequence.
+ * @returns A function that takes an argument and applies a series of functions to it in sequence.
+ * Each function in the series takes the output of the previous function as its input.
+ * The final function's return value is the output of the entire pipeline.
+ * @remarks Typings accepts functions until 100
+ * @remarks only first functions can receives multiples args, the next ones can receive one and only one arguments
+ * @remarks we can type up to 100 functions
+ */
 export function pipe<F0 extends any[], F1, F2>(
   f1: Fn<F0, F1>,
   f2: Fn<[Awaited<F1>], F2>,
