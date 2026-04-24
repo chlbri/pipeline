@@ -12,6 +12,23 @@ All notable changes to this project will be documented in this file.
 <details>
 <summary>
 
+## **[1.5.2] - 24/04/2026** => _13:06_
+
+</summary>
+
+- Fix: unify built import tests across extension modules using
+  `createImportFnTests`
+- Update: bump `@bemedev/dev-utils` to `^0.6.5`
+- Fix: align `vitest`, `@vitest/ui`, and `@vitest/coverage-v8` dependency
+  versions to `4.1.4`
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.5.1] - 23/04/2026** => _19:35_
 
 </summary>
