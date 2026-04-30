@@ -16,7 +16,8 @@ All notable changes to this project will be documented in this file.
 
 </summary>
 
-- Update: bump development dependencies for tooling to `oxfmt@^0.47.0`, `oxlint@^1.62.0`, and `rolldown@1.0.0-rc.18`
+- Update: bump development dependencies for tooling to `oxfmt@^0.47.0`,
+  `oxlint@^1.62.0`, and `rolldown@1.0.0-rc.18`
 
 </details>
 
