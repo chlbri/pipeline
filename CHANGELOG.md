@@ -12,6 +12,19 @@ All notable changes to this project will be documented in this file.
 <details>
 <summary>
 
+## **[1.5.4] - 03/05/2026** => _10:39_
+
+</summary>
+
+- Update: bump development dependency `globals` to `^17.6.0`
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.5.3] - 29/04/2026** => _21:48_
 
 </summary>

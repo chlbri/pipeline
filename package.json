@@ -1,6 +1,6 @@
 {
   "name": "@bemedev/pipe",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "A utility for creating and managing pipelines in Typescript.",
   "author": {
     "email": "bri_lvi@icloud.com",
@@ -122,7 +122,7 @@
     "@vitest/coverage-v8": "^4.1.4",
     "@vitest/ui": "4.1.4",
     "glob": "^13.0.6",
-    "globals": "^17.5.0",
+    "globals": "^17.6.0",
     "husky": "^9.1.7",
     "onchange": "^7.1.0",
     "oxfmt": "^0.47.0",
