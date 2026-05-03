@@ -12,6 +12,21 @@ All notable changes to this project will be documented in this file.
 <details>
 <summary>
 
+## **[1.5.5] - 03/05/2026** => _10:54_
+
+</summary>
+
+- Update: bump `vitest`, `@vitest/ui`, and `@vitest/coverage-v8` to `4.1.5`
+- Refactor: simplify `upgrade` scripts and remove the legacy
+  `config:vitest` command
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.5.4] - 03/05/2026** => _10:39_
 
 </summary>
