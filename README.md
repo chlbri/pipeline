@@ -27,8 +27,8 @@ code by creating typed, performant, and fully inferred processing pipelines
    - [voidAction / tap](#voidaction--tap)
    - [flatten](#flatten)
    - [mapArray](#maparray)
-   - [map](#map)
-   - [toggleMap](#togglemap)
+   - [monad](#monad)
+   - [toggleMonad](#togglemonad)
 7. [String Extensions](#string-extensions)
 8. [Boolean Extensions](#boolean-extensions)
 9. [Arithmetic Extensions](#arithmetic-extensions)
@@ -563,33 +563,40 @@ getCityAndZip({ address: { city: 'Lyon', zip: '69001' } });
 
 ---
 
-### `map`
+### `monad`
 
 ```typescript
-map<T>(
-  helper: (branch: Branch2<T>) => Branch<T>[]
-): (value: T) => T
+monad<T>(
+  helper: (branch: BranchF<T>) => Branch<T>[]
+): (value: T) => ReturnType
 ```
 
 Applies the **first branch whose condition is met** and returns its
 transformation. If no branch matches, the value is returned unchanged.
-Enables expressive pattern-matching inside a pipeline.
+Enables expressive pattern-matching inside a pipeline with improved type
+safety and semantic clarity.
 
 Each branch is an object `{ cond, fn }` :
 
-- `cond: (value: T) => boolean` — trigger condition
-- `fn: (value: subtype) => T` — transformation
+- `cond: (value: T) => value is R` — type guard condition
+- `fn: (value: R) => any` — transformation for the matched type
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { map } from '@bemedev/pipe/extensions/common';
+import { monad } from '@bemedev/pipe/extensions/common';
 
 // Clamp a value between 0 and 100
 const clamp = pipe(
   (x: number) => x,
-  map(branch => [
-    branch({ cond: x => x < 0, fn: () => 0 }),
-    branch({ cond: x => x > 100, fn: () => 100 }),
+  monad(branch => [
+    branch(
+      (x): x is number => x < 0,
+      () => 0,
+    ),
+    branch(
+      (x): x is number => x > 100,
+      () => 100,
+    ),
   ]),
 );
 
@@ -600,16 +607,28 @@ clamp(120); // 100
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { map } from '@bemedev/pipe/extensions/common';
+import { monad } from '@bemedev/pipe/extensions/common';
 
 // Normalize HTTP status to label
 const statusLabel = pipe(
   (code: number) => code,
-  map(branch => [
-    branch({ cond: c => c >= 500, fn: () => 'Erreur serveur' }),
-    branch({ cond: c => c >= 400, fn: () => 'Erreur client' }),
-    branch({ cond: c => c >= 300, fn: () => 'Redirection' }),
-    branch({ cond: c => c >= 200, fn: () => 'Succès' }),
+  monad(branch => [
+    branch(
+      (c): c is number => c >= 500,
+      () => 'Erreur serveur',
+    ),
+    branch(
+      (c): c is number => c >= 400,
+      () => 'Erreur client',
+    ),
+    branch(
+      (c): c is number => c >= 300,
+      () => 'Redirection',
+    ),
+    branch(
+      (c): c is number => c >= 200,
+      () => 'Succès',
+    ),
   ]),
 );
 
@@ -621,24 +640,24 @@ statusLabel(100); // 100  ← no branch matched → value unchanged
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { map } from '@bemedev/pipe/extensions/common';
+import { monad } from '@bemedev/pipe/extensions/common';
 
 // Type discrimination in a union pipeline
 const describe = pipe(
   (x: number | string | boolean) => x,
-  map(branch => [
-    branch<number>({
-      cond: x => typeof x === 'number',
-      fn: x => `nombre: ${x}`,
-    }),
-    branch<string>({
-      cond: x => typeof x === 'string',
-      fn: x => `chaîne: "${x}"`,
-    }),
-    branch<boolean>({
-      cond: x => typeof x === 'boolean',
-      fn: x => `booléen: ${x}`,
-    }),
+  monad(branch => [
+    branch(
+      (x): x is number => typeof x === 'number',
+      x => `nombre: ${x}`,
+    ),
+    branch(
+      (x): x is string => typeof x === 'string',
+      x => `chaîne: "${x}"`,
+    ),
+    branch(
+      (x): x is boolean => typeof x === 'boolean',
+      x => `booléen: ${x}`,
+    ),
   ]),
 );
 
@@ -649,18 +668,18 @@ describe(true); // 'booléen: true'
 
 ---
 
-### `toggleMap`
+### `toggleMonad`
 
 ```typescript
 // Positional form
-toggleMap<T>(
+toggleMonad<T>(
   condition: (value: T) => boolean,
   truthy: (value: T) => T,
   falsy?:  (value: T) => T,
 ): (value: T) => T
 
 // Object form
-toggleMap<T>({
+toggleMonad<T>({
   condition?: (value: T) => boolean,
   truthy: (value: T) => T,
   falsy?:  (value: T) => T,
@@ -673,12 +692,12 @@ also optional: if absent, `truthy` is always applied.
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { toggleMap } from '@bemedev/pipe/extensions/common';
+import { toggleMonad } from '@bemedev/pipe/extensions/common';
 
 // Absolute value (positional form)
 const abs = pipe(
   (x: number) => x,
-  toggleMap(
+  toggleMonad(
     x => x < 0,
     x => -x,
     x => x,
@@ -691,12 +710,12 @@ abs(3); // 3
 
 ```typescript
 import { pipe } from '@bemedev/pipe';
-import { toggleMap } from '@bemedev/pipe/extensions/common';
+import { toggleMonad } from '@bemedev/pipe/extensions/common';
 
 // Normalize a score (object form)
 const normaliseScore = pipe(
   (score: number) => score,
-  toggleMap({
+  toggleMonad({
     condition: s => s > 20,
     truthy: () => 20,
     falsy: s => s,

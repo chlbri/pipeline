@@ -12,6 +12,21 @@ All notable changes to this project will be documented in this file.
 <details>
 <summary>
 
+## **[1.6.0] - 10/05/2026** => _21:39_
+
+</summary>
+
+- Refactor: rename `map` to `monad` and `toggleMap` to `toggleMonad` in
+  common extensions for better semantic clarity
+- Update: bump development dependencies including workflow improvements
+
+</details>
+
+<br/>
+
+<details>
+<summary>
+
 ## **[1.5.5] - 03/05/2026** => _10:54_
 
 </summary>
