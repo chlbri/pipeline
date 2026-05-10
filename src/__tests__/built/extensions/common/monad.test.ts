@@ -2,8 +2,8 @@ import { createImportFnTests } from '@bemedev/dev-utils/build-tests';
 
 describe(
   ...createImportFnTests({
-    path: 'extensions/common/map',
-    SUCCESS: ['map', 'toggleMap'],
+    path: 'extensions/common/monad',
+    SUCCESS: ['monad', 'toggleMonad'],
     FAILS: [
       'identity',
       'isValue',

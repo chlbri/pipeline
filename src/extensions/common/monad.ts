@@ -1,30 +1,32 @@
 import type { Fn } from '../../types';
 
-type Branch<T = any, R extends T = T> = {
-  cond: Fn<[T], boolean>;
+type Fn2<T, R extends T> = (arg: T) => arg is R;
+
+type Branch<T = any, R extends T = T, R2 = any> = {
+  cond: Fn2<T, R>;
   fn: R extends boolean
-    ? Fn<[boolean], T>
+    ? Fn<[boolean], R2>
     : R extends any
-      ? Fn<[R], T>
+      ? Fn<[R], R2>
       : never;
 };
 
-type Branch2<T = any> = <R extends T = T>(
-  branch: Branch<T, R>,
-) => Branch<T, R>;
+type BranchF<T = any> = <const R extends T = T, R2 = any>(
+  cond: Fn2<T, R>,
+  fn: Fn<[NoInfer<R>], R2>,
+) => Branch<T, T, R2>;
 
-const branch2: Branch2 = branch => branch;
-type Branch3<T> = <U extends Branch2<T>>(branch: U) => Branch<T>[];
-
-export const map = <T>(helper: Branch3<T>) => {
-  const branches = helper(branch2);
-
-  return (value: T): T => {
-    for (const { cond, fn } of branches) {
+export const monad = <T, const U extends Branch<T>[]>(
+  helper: (branch: BranchF<T>) => U,
+) => {
+  type TT = ReturnType<U[number]['fn']>;
+  const fns = helper((cond, fn: any) => ({ cond, fn }));
+  return (value: T): TT => {
+    for (const { cond, fn } of fns) {
       if (cond(value)) return fn(value as any);
     }
 
-    return value;
+    return value as any;
   };
 };
 
@@ -56,14 +58,14 @@ const _toggleMap: _ToggleMap_F = ({ condition, truthy, falsy }) => {
   };
 };
 
-export function toggleMap<T>(params: ConditionObject<T>): Fn<[T], T>;
-export function toggleMap<T>(
+export function toggleMonad<T>(params: ConditionObject<T>): Fn<[T], T>;
+export function toggleMonad<T>(
   condition: Fn<[T], boolean>,
   truthy: Fn<[T], T>,
   falsy?: Fn<[T], T>,
 ): Fn<[T], T>;
 
-export function toggleMap<T>(
+export function toggleMonad<T>(
   _condition: Condition<T>,
   _truthy?: Fn<[T], T>,
   _falsy?: Fn<[T], T>,

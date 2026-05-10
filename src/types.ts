@@ -17,6 +17,13 @@ export type TupleOfLength<
 
 export type NoTyped = TupleOfLength<Fn, 2>;
 
+export type Result<T = unknown> = { check: true; value: T } | false;
+
+export type CheckerB_F = (arg: unknown) => boolean;
+export type Checker_F<T = any> = (arg: unknown) => Result<T>;
+
+export type CheckerA<T = any> = ((arg: unknown) => arg is T) | CheckerB_F;
+
 /**
  * Helper type to check if a type is a Promise
  */

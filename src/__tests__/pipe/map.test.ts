@@ -1,68 +1,87 @@
-import { addBy, identity, map, tap } from '../../extensions';
+import { addBy, identity, monad, tap } from '../../extensions';
 import { pipe } from '../../pipe';
+import { createTests } from '@bemedev/dev-utils/vitest-extended';
 
 describe('#08 => map', () => {
-  describe('#01 => should handle map', () => {
-    const piped = pipe(
-      addBy(2),
-      map(helper => [
-        helper({
-          cond: value => value === 5,
-          fn: v => v + 10,
-        }),
-        helper({
-          cond: value => value === 2,
-          fn: v => v * 10,
-        }),
-      ]),
-    );
-
-    it('#01 => 3 => 15', () => {
-      expect(piped(3)).toEqual(15);
-    });
-
-    it('#02 => 0 => 20', () => {
-      expect(piped(0)).toEqual(20);
-    });
-  });
+  describe(
+    '#01 => should handle map',
+    createTests(
+      pipe(
+        addBy(2),
+        monad(helper => [
+          helper(
+            value => value === 5,
+            v => v + 10,
+          ),
+          helper(
+            value => value === 2,
+            v => v * 10,
+          ),
+        ]),
+      ),
+    ).success(
+      {
+        invite: '3 => 15',
+        parameters: 3,
+        expected: 15,
+      },
+      {
+        invite: '0 => 20',
+        parameters: 0,
+        expected: 20,
+      },
+      {
+        invite: '12 => 14, no condition matched, return value',
+        parameters: 12,
+        expected: 14,
+      },
+    ),
+  );
 
   describe('#02 => union', () => {
     const log = vi.fn();
 
-    const piped = pipe(
-      (x: number | string | boolean) => x,
-      map(helper => [
-        helper<number>({
-          cond: value => typeof value === 'number',
-          fn: v => `${v * 2}`,
-        }),
+    describe(
+      '#01 => success',
+      createTests(
+        pipe(
+          (x: number | string | boolean) => x,
+          monad(helper => [
+            helper(
+              value => typeof value === 'number',
+              v => `${v * 2}`,
+            ),
 
-        helper<boolean>({
-          cond: value => typeof value === 'number',
-          fn: identity,
-        }),
+            helper(value => typeof value === 'boolean', identity),
 
-        helper<string>({
-          cond: value => typeof value === 'string',
-          fn: v => v.toUpperCase(),
-        }),
-      ]),
-      tap(log),
+            helper(
+              value => typeof value === 'string',
+              v => v.toUpperCase(),
+            ),
+          ]),
+          v => v,
+          tap(log),
+        ),
+      ).success(
+        {
+          invite: '3 => "6"',
+          parameters: 3,
+          expected: '6',
+        },
+        {
+          invite: '"test" => "TEST"',
+          parameters: 'test',
+          expected: 'TEST',
+        },
+        {
+          invite: 'true => true, identity',
+          parameters: true,
+          expected: true,
+        },
+      ),
     );
 
-    it('#01 => 3 => "6"', () => {
-      expect(piped(3)).toBe('6');
-    });
-
-    it('#02 => "test" => "TEST"', () => {
-      expect(piped('test')).toBe('TEST');
-    });
-
-    it('#03 => true => true, identity', () => {
-      expect(piped(true)).toBe(true);
-    });
-
-    describe('#04 => console', () => {
+    describe('#02 => console', () => {
       it('#01 => Called with "6"', () => {
         expect(log).toHaveBeenNthCalledWith(1, '6');
       });

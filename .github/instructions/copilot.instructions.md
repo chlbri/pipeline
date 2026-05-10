@@ -54,7 +54,7 @@ Portée du changement, par exemple :
 #### Description
 
 - **Longueur** : Maximum 50 caractères
-- **Style** : Impératif présent ("addBy" pas "added")
+- **Style** : Impératif présent ("add" pas "added")
 - **Capitalisation** : Première lettre minuscule
 - **Ponctuation** : Pas de point final
 
@@ -87,7 +87,7 @@ Portée du changement, par exemple :
 #### Nouvelle fonctionnalité
 
 ```
-feat(cli): addBy lint script support
+feat(cli): add lint script support
 
 Ajout du support pour un troisième script obligatoire (lint)
 dans la configuration CLI. Permet une validation complète
@@ -198,7 +198,7 @@ avec résolution des conflits de merge.
 #### Revert commits
 
 ```
-revert: "feat(cli): addBy experimental flag parsing"
+revert: "feat(cli): add experimental flag parsing"
 
 This reverts commit 1234567890abcdef.
 Cause: Performance regression in production.
@@ -239,19 +239,19 @@ update: changes
 ❌ **Messages trop longs**
 
 ```
-feat: addBy a very long description that exceeds the 50 character limit and makes it hard to read
+feat: add a very long description that exceeds the 50 character limit and makes it hard to read
 ```
 
 ❌ **Mélange de langues**
 
 ```
-feat: addBy nouvelle fonctionnalité for parsing
+feat: add nouvelle fonctionnalité for parsing
 ```
 
 ❌ **Commits trop gros**
 
 ```
-feat: addBy 15 new features and fix 10 bugs
+feat: add 15 new features and fix 10 bugs
 ```
 
 ### Ressources

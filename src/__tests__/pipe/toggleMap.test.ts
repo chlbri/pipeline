@@ -1,5 +1,5 @@
 import { pipe } from '../../pipe';
-import { toggleMap } from '../../extensions';
+import { toggleMonad } from '../../extensions';
 
 describe('toggleMap', () => {
   const condition = <T extends number>(x: T) => x > 5;
@@ -10,7 +10,7 @@ describe('toggleMap', () => {
     describe('#01 => object arg', () => {
       const piped = pipe(
         (x: number) => x,
-        toggleMap({ truthy, falsy, condition }),
+        toggleMonad({ truthy, falsy, condition }),
       );
 
       it('#01 => 3 => 13', () => {
@@ -25,7 +25,7 @@ describe('toggleMap', () => {
     describe('#02 => param args', () => {
       const piped = pipe(
         (x: number) => x,
-        toggleMap(condition, truthy, falsy),
+        toggleMonad(condition, truthy, falsy),
       );
 
       it('#01 => 3 => 13', () => {
@@ -39,7 +39,7 @@ describe('toggleMap', () => {
   });
 
   describe('#02 => falsy is not defined', () => {
-    const piped = pipe((x: number) => x, toggleMap(condition, truthy));
+    const piped = pipe((x: number) => x, toggleMonad(condition, truthy));
 
     it('#01 => 3 => 3', () => {
       expect(piped(3)).toBe(3);
@@ -51,7 +51,7 @@ describe('toggleMap', () => {
   });
 
   describe('#03 => condition and falsy are not defined', () => {
-    const piped = pipe((x: number) => x, toggleMap({ truthy }));
+    const piped = pipe((x: number) => x, toggleMonad({ truthy }));
 
     it('#01 => 3 => 6', () => {
       expect(piped(3)).toBe(6);
@@ -75,7 +75,10 @@ describe('toggleMap', () => {
   });
 
   describe('#04 => falsy is not defined (object)', () => {
-    const piped = pipe((x: number) => x, toggleMap({ truthy, condition }));
+    const piped = pipe(
+      (x: number) => x,
+      toggleMonad({ truthy, condition }),
+    );
 
     it('#01 => 3 => 6', () => {
       expect(piped(3)).toBe(3);
